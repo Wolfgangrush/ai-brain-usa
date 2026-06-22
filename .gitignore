@@ -1,0 +1,14 @@
+
+# === SENSITIVE CONTENT FIREWALL (locked 2026-05-18 · India v0.1 leak lesson) ===
+LINKEDIN_*.md
+LINKEDIN_*.docx
+*_DRAFT.md
+*_DRAFT.docx
+*_PRIVATE.md
+.DS_Store
+*.swp
+.idea/
+.vscode/
+__pycache__/
+*.pyc
+*.egg-info/

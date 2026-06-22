@@ -1,0 +1,54 @@
+description = "🔄 Update the firm code, skills, and prompts from upstream. Wraps `pip install --upgrade git+<repo>`. Your matter data + your project CLAUDE.md are NEVER touched — only firm code/skills/prompts get refreshed. Run this monthly or when the publisher tells you a new version is out."
+
+prompt = """
+# 🔄 Update — USA AI Brain
+
+The advocate said:
+
+\"\"\"
+{{args}}
+\"\"\"
+
+You are updating the USA AI Brain to its latest published version.
+
+## Step 1 — Confirm the advocate's intent
+
+Tell the advocate:
+
+> 🔄 I'm about to run:
+>
+>     ailawfirm-usa update
+>
+> This pulls the latest firm code, skills, and prompts from the upstream repository:
+> https://github.com/Wolfgangrush/ai-law-firm-usa
+>
+> Your matter data + your project root CLAUDE.md will NOT be touched. Only the firm's internal code/skills/prompts get refreshed.
+>
+> Proceed? (yes / no)
+
+If the advocate says no — STOP. Do nothing.
+
+## Step 2 — Run the update
+
+!{ailawfirm-usa update}
+
+## Step 3 — Report the result
+
+If exit code is 0:
+
+> ✅ Firm updated. To see what's new, run:
+>
+>     ailawfirm-usa status
+
+If non-zero:
+
+> ❌ Update failed. Try the manual command:
+>
+>     pip install --upgrade git+https://github.com/Wolfgangrush/ai-law-firm-usa.git
+>
+> Common causes: no internet, pip permissions, virtual environment not activated.
+
+## Step 4 — Suggest restart
+
+After a successful update, tell the advocate to close any open `ailawfirm-usa` sessions and re-launch so the new skills + prompts load.
+"""

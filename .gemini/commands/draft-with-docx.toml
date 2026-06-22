@@ -1,0 +1,72 @@
+description = "✍️ Pair every drafted document with a Word (.docx) file. When the advocate asks for a draft — complaint, petition, affidavit, reply, plaint, sale-deed analysis, advisory note — produce BOTH the markdown AND the .docx in the same directory. Word is what the registry accepts and what clients open. Markdown is what the firm reads and diffs."
+
+prompt = """
+# ✍️ Draft-With-Docx — USA AI Brain
+
+The advocate said:
+
+\"\"\"
+{{args}}
+\"\"\"
+
+You are producing a legal document for the advocate's matter. The firm's standing rule: every drafted document ships as a paired `.md` + `.docx` in the same directory, atomically. Markdown for the firm, Word for the registry and the client.
+
+## Step 1 — Detect the document type
+
+Identify what the advocate is asking you to draft:
+- Pleadings (complaint, plaint, written statement, replication)
+- Petitions (writ, SLP, review, curative, transfer, contempt)
+- Criminal pleadings (bail, anticipatory bail, 482 CrPC / 528 BNSS, revision, appeal)
+- Civil applications (Section 9 Arb, Section 11 Arb, Order 39 R.1-2, O.7 R.11)
+- Affidavits (verification, counter-affidavit, rejoinder)
+- Notices (legal notice, Section 80 CPC, Section 138 NI demand)
+- Advisory notes, legal opinions, due-diligence reports
+- Sale deed analysis, title search, property reports
+- Tax forms (Form 35, Form 36, Section 263 reply, Section 148A objection)
+
+## Step 2 — Locate the matter folder
+
+Find the matter folder under `~/Desktop/<firm-name>/<matter-folder>/`. If a `drafts/` subdir doesn't exist, create it:
+
+!{mkdir -p drafts}
+
+## Step 3 — Write the markdown draft
+
+Produce the draft as markdown with a date-prefixed filename:
+
+```
+drafts/YYYY-MM-DD-<short-title>.md
+```
+
+## Step 4 — Pair with .docx (MANDATORY — same tool call window)
+
+Convert the .md to .docx in the same directory:
+
+!{pandoc "drafts/$(ls -t drafts/*.md | head -1 | xargs basename)" -o "drafts/$(ls -t drafts/*.md | head -1 | xargs basename .md).docx" --from=markdown+pipe_tables+yaml_metadata_block 2>&1 || echo "pandoc-missing"}
+
+If pandoc reports missing, fall back:
+
+!{python3 -c "import pypandoc, glob, os; latest = max(glob.glob('drafts/*.md'), key=os.path.getmtime); pypandoc.convert_file(latest, 'docx', outputfile=latest.replace('.md', '.docx'))" 2>&1}
+
+## Step 5 — Verify both files exist
+
+!{ls -la drafts/*.md drafts/*.docx | tail -4}
+
+## Step 6 — Report to advocate
+
+Tell the advocate:
+
+> ✍️ Draft ready (paired):
+> - `drafts/YYYY-MM-DD-<title>.md` — for the firm + diffs
+> - `drafts/YYYY-MM-DD-<title>.docx` — for the registry + client
+
+NEVER report "draft ready" if only one of the two files exists.
+
+## Why this rule
+
+- US courts accept Word, not markdown. Markdown-only = unfileable.
+- Clients open Word. Markdown-only = unsendable.
+- The firm's brain reads markdown. Docx-only = opaque to search and diff.
+
+Both files, every time, same directory.
+"""
