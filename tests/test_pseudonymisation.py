@@ -7,22 +7,22 @@ from ailawfirm_usa.pseudonymisation import PseudonymisationGateway
 
 def test_aadhaar_redacted():
     gw = PseudonymisationGateway()
-    clean, _ = gw.sanitize("Aadhaar 1234 5678 9012 belongs to the client.")
-    assert "1234 5678 9012" not in clean
+    clean, _ = gw.sanitize("Aadhaar 9999 9999 0019 belongs to the client.")
+    assert "9999 9999 0019" not in clean
     assert "[AADHAAR_1]" in clean
 
 
 def test_pan_redacted():
     gw = PseudonymisationGateway()
-    clean, _ = gw.sanitize("PAN ABCDE1234F is on file.")
-    assert "ABCDE1234F" not in clean
+    clean, _ = gw.sanitize("PAN ABFPK1234L is on file.")
+    assert "ABFPK1234L" not in clean
     assert "[PAN_1]" in clean
 
 
 def test_gstin_redacted():
     gw = PseudonymisationGateway()
-    clean, _ = gw.sanitize("GSTIN 27ABCDE1234F1Z5 verified.")
-    assert "27ABCDE1234F1Z5" not in clean
+    clean, _ = gw.sanitize("GSTIN 27AAPFU0939F1ZV verified.")
+    assert "27AAPFU0939F1ZV" not in clean
     assert "[GSTIN_1]" in clean
 
 
@@ -65,13 +65,13 @@ def test_case_number_redacted():
 
 def test_desanitize_roundtrip():
     gw = PseudonymisationGateway()
-    original = "Mr. John Smith filed Aadhaar 1234 5678 9012 with ₹4,50,000."
+    original = "Mr. John Smith filed Aadhaar 9999 9999 0019 with ₹4,50,000."
     clean, token_map = gw.sanitize(original)
     # Simulate cloud returning the sanitized text (with placeholders intact)
     cloud_response = f"Note: {clean} please verify."
     restored = gw.desanitize(cloud_response, token_map)
     assert "John Smith" in restored
-    assert "1234 5678 9012" in restored
+    assert "9999 9999 0019" in restored
     assert "4,50,000" in restored
 
 
@@ -94,7 +94,7 @@ def test_multiple_distinct_entities():
 
 def test_is_safe_for_cloud_detects_pii():
     gw = PseudonymisationGateway()
-    safe, detected = gw.is_safe_for_cloud("Mr. John Smith with Aadhaar 1234 5678 9012")
+    safe, detected = gw.is_safe_for_cloud("Mr. John Smith with Aadhaar 9999 9999 0019")
     assert safe is False
     assert "AADHAAR" in detected
     assert "PERSON" in detected
