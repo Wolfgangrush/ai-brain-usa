@@ -38,9 +38,7 @@ from dataclasses import dataclass, field
 from ._pii_validators import (
     aadhaar_validate,
     gstin_validate,
-    iban_validate,
     itin_validate,
-    nric_validate,
 )
 
 
