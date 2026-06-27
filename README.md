@@ -1,3 +1,22 @@
+<div align="center">
+
+<img src="docs/banner.png" width="820"/>
+
+**A federal-focused, local-first practice brain for US attorneys.**
+
+Visit the live site: [wolfgangrush.github.io](https://wolfgangrush.github.io)
+
+</div>
+
+<div align="center">
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+![Local-first](https://img.shields.io/badge/Local--first-yes-blue.svg)
+![Focus: US Federal Law](https://img.shields.io/badge/Focus-US%20Federal%20Law-1f6feb.svg)
+
+</div>
+
+
 # 🇺🇸 AI Brain for USA Lawyers
 
 > **Free practice OS for every US solo attorney, in-house counsel, and supervised paralegal. Federal-focused with state scaffolding. Terminal-native. Local-first by default (Ollama + Qwen3 — nothing leaves your laptop). Cloud-LLM optional with the [Pseudonymisation Gateway](https://github.com/Wolfgangrush/pseudonymisation-gateway) sanitising PII before any prompt leaves the machine.**
