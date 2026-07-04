@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Auto-installed guard: mirror CI's lint gate locally so lint-broken code
+# can never reach GitHub. Runs the EXACT command CI runs: `ruff check .`
+# Installed by scripts/install-git-hooks.sh. See CI: .github/workflows/ci.yml
+set -euo pipefail
+
+if command -v ruff >/dev/null 2>&1; then RUFF="ruff"
+elif python3 -m ruff --version >/dev/null 2>&1; then RUFF="python3 -m ruff"
+else
+  echo "pre-push: ruff not found — skipping local lint gate (CI will still check). Install: pip install ruff" >&2
+  exit 0
+fi
+
+if ! $RUFF check . ; then
+  echo "" >&2
+  echo "──────────────────────────────────────────────────────────────" >&2
+  echo "PUSH BLOCKED: ruff lint failed — this is exactly what CI checks." >&2
+  echo "Fix it in one command, then re-commit and push:" >&2
+  echo "    ruff check --fix ." >&2
+  echo "──────────────────────────────────────────────────────────────" >&2
+  exit 1
+fi
+exit 0
