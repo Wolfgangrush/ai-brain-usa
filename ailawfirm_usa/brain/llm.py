@@ -26,9 +26,7 @@ def _cfg() -> Tuple[str, str, str]:
     """Read (base_url, key, model) fresh from the environment on every call."""
     base_url = os.environ.get("ANTHROPIC_BASE_URL", "").strip()
     key = (
-        os.environ.get("ANTHROPIC_AUTH_TOKEN")
-        or os.environ.get("ANTHROPIC_API_KEY")
-        or ""
+        os.environ.get("ANTHROPIC_AUTH_TOKEN") or os.environ.get("ANTHROPIC_API_KEY") or ""
     ).strip()
     model = (os.environ.get("ANTHROPIC_MODEL") or "").strip() or "glm-5.2"
     return base_url, key, model

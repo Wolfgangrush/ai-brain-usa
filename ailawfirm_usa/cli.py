@@ -164,14 +164,25 @@ def main():
     p_cal.add_argument("--location")
 
     # ask — one-shot: route a single query through the brain
-    p_ask = sub.add_parser("ask", help="Ask the brain one question — it routes to the right specialist")
-    p_ask.add_argument("query", nargs="+", help='Your question, e.g. "limitation for FDCPA claim filed 12 Jan 2026"')
+    p_ask = sub.add_parser(
+        "ask", help="Ask the brain one question — it routes to the right specialist"
+    )
+    p_ask.add_argument(
+        "query",
+        nargs="+",
+        help='Your question, e.g. "limitation for FDCPA claim filed 12 Jan 2026"',
+    )
 
     # chat — interactive terminal session with the brain
-    sub.add_parser("chat", help="Talk to the brain in the terminal — it routes each line to a specialist")
+    sub.add_parser(
+        "chat", help="Talk to the brain in the terminal — it routes each line to a specialist"
+    )
 
     # reception — the "turn it on" boot: greet + systems-check + memory + recap
-    sub.add_parser("reception", help="Boot the brain: greet, verify all specialists, turn on memory, show recap")
+    sub.add_parser(
+        "reception",
+        help="Boot the brain: greet, verify all specialists, turn on memory, show recap",
+    )
 
     # recap — show retrospective-memory of recent sessions
     p_recap = sub.add_parser("recap", help="Show recent-session retrospective memory")

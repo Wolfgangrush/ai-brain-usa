@@ -1,21 +1,38 @@
 #!/usr/bin/env bash
-# Auto-installed guard: mirror CI's lint gate locally so lint-broken code
-# can never reach GitHub. Runs the EXACT command CI runs: `ruff check .`
-# Installed by scripts/install-git-hooks.sh. See CI: .github/workflows/ci.yml
-set -euo pipefail
+# Auto-installed lint gate. Mirrors THIS repo's CI exactly by reading the
+# ruff steps out of .github/workflows/ci.yml and running them verbatim —
+# so the local gate can never drift from CI (check-only vs check+format).
+# Reinstall after clone:  bash scripts/install-git-hooks.sh
+set -uo pipefail
+
+CI=".github/workflows/ci.yml"
+[ -f "$CI" ] || { echo "pre-push: no $CI — skipping lint gate"; exit 0; }
 
 if command -v ruff >/dev/null 2>&1; then RUFF="ruff"
 elif python3 -m ruff --version >/dev/null 2>&1; then RUFF="python3 -m ruff"
 else
-  echo "pre-push: ruff not found — skipping local lint gate (CI will still check). Install: pip install ruff" >&2
+  echo "pre-push: ruff not found — skipping local lint gate (CI still checks). Install: pip install ruff" >&2
   exit 0
 fi
 
-if ! $RUFF check . ; then
+# Pull every `run: ruff ...` line from ci.yml and run it verbatim.
+mapfile -t CMDS < <(grep -E '^[[:space:]]*-?[[:space:]]*run:[[:space:]]*ruff ' "$CI" | sed -E 's/^[[:space:]]*-?[[:space:]]*run:[[:space:]]*//')
+[ "${#CMDS[@]}" -eq 0 ] && { echo "pre-push: no ruff steps in CI — skipping"; exit 0; }
+
+fail=0
+for c in "${CMDS[@]}"; do
+  # swap the bare `ruff` token for the resolved runner
+  runcmd="${c/#ruff/$RUFF}"
+  echo "pre-push: $c"
+  eval "$runcmd" || fail=1
+done
+
+if [ "$fail" -ne 0 ]; then
   echo "" >&2
   echo "──────────────────────────────────────────────────────────────" >&2
   echo "PUSH BLOCKED: ruff lint failed — this is exactly what CI checks." >&2
-  echo "Fix it in one command, then re-commit and push:" >&2
+  echo "Fix both in two commands, then re-commit and push:" >&2
+  echo "    ruff format ." >&2
   echo "    ruff check --fix ." >&2
   echo "──────────────────────────────────────────────────────────────" >&2
   exit 1

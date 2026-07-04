@@ -60,18 +60,13 @@ def run_reception() -> int:
 
     # 4. Summary line
     router_state = "ON" if router_ok else "OFF"
-    print(
-        f"  brain: ON  ·  specialists: {online}/6 online  ·  "
-        f"router: {router_state}"
-    )
+    print(f"  brain: ON  ·  specialists: {online}/6 online  ·  router: {router_state}")
     print()
 
     # 5. Retrospective memory count
     n = memory.count()
     suffix = "s" if n != 1 else ""
-    print(
-        f"  retrospective memory: ON  ·  {n} past interaction{suffix} on file"
-    )
+    print(f"  retrospective memory: ON  ·  {n} past interaction{suffix} on file")
     print()
 
     # 6. Recap — covers both "prints internally" and "returns a string".
