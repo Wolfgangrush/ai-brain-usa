@@ -334,51 +334,6 @@ class KnowledgeGraph:
         }
 
     # ── Seed from known facts ─────────────────────────────────────────────
-
-    def seed_from_entity_facts(self, entity_facts: dict):
-        """
-        Seed the knowledge graph from fact_checker.py ENTITY_FACTS.
-        This bootstraps the graph with known ground truth.
-        """
-        for key, facts in entity_facts.items():
-            name = facts.get("full_name", key.capitalize())
-            etype = facts.get("type", "person")
-            self.add_entity(
-                name,
-                etype,
-                {
-                    "gender": facts.get("gender", ""),
-                    "birthday": facts.get("birthday", ""),
-                },
-            )
-
-            # Relationships
-            parent = facts.get("parent")
-            if parent:
-                self.add_triple(
-                    name, "child_of", parent.capitalize(), valid_from=facts.get("birthday")
-                )
-
-            partner = facts.get("partner")
-            if partner:
-                self.add_triple(name, "married_to", partner.capitalize())
-
-            relationship = facts.get("relationship", "")
-            if relationship == "daughter":
-                self.add_triple(
-                    name,
-                    "is_child_of",
-                    facts.get("parent", "").capitalize() or name,
-                    valid_from=facts.get("birthday"),
-                )
-            elif relationship == "husband":
-                self.add_triple(name, "is_partner_of", facts.get("partner", name).capitalize())
-            elif relationship == "brother":
-                self.add_triple(name, "is_sibling_of", facts.get("sibling", name).capitalize())
-            elif relationship == "dog":
-                self.add_triple(name, "is_pet_of", facts.get("owner", name).capitalize())
-                self.add_entity(name, "animal")
-
-            # Interests
-            for interest in facts.get("interests", []):
-                self.add_triple(name, "loves", interest.capitalize(), valid_from="2025-01-01")
+    # NOTE: a previous seed_from_entity_facts method (sourced from a non-
+    # existent fact_checker.py module) was removed — it was never called and
+    # the upstream module it referenced does not exist in this package.

@@ -17,7 +17,10 @@ from collections import defaultdict
 
 import chromadb
 
+from .config import BrainConfig
 from .normalize import normalize
+
+_COLLECTION_NAME = BrainConfig().collection_name
 
 
 # File types that might contain conversations
@@ -213,9 +216,9 @@ def get_collection(palace_path: str):
     os.makedirs(palace_path, exist_ok=True)
     client = chromadb.PersistentClient(path=palace_path)
     try:
-        return client.get_collection("brain_drawers")
+        return client.get_collection(_COLLECTION_NAME)
     except Exception:
-        return client.create_collection("brain_drawers")
+        return client.create_collection(_COLLECTION_NAME)
 
 
 def file_already_mined(collection, source_file: str) -> bool:

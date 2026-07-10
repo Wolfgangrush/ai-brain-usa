@@ -11,6 +11,10 @@ from pathlib import Path
 
 import chromadb
 
+from .config import BrainConfig
+
+_COLLECTION_NAME = BrainConfig().collection_name
+
 
 def search(query: str, palace_path: str, wing: str = None, room: str = None, n_results: int = 5):
     """
@@ -19,7 +23,7 @@ def search(query: str, palace_path: str, wing: str = None, room: str = None, n_r
     """
     try:
         client = chromadb.PersistentClient(path=palace_path)
-        col = client.get_collection("brain_drawers")
+        col = client.get_collection(_COLLECTION_NAME)
     except Exception:
         print(f"\n  No palace found at {palace_path}")
         print("  Run: brain init <dir> then brain mine <dir>")
@@ -93,7 +97,7 @@ def search_memories(
     """
     try:
         client = chromadb.PersistentClient(path=palace_path)
-        col = client.get_collection("brain_drawers")
+        col = client.get_collection(_COLLECTION_NAME)
     except Exception as e:
         return {"error": f"No palace found at {palace_path}: {e}"}
 

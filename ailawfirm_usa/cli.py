@@ -1,17 +1,22 @@
 #!/usr/bin/env python3
 """
-AI Brain — USA · Solo Edition · v0.1
-Give your US legal practice a memory. No API key required.
+AI Brain — USA · Solo Edition · v2.0.0
+The terminal brain — classify → route → specialists, all in one CLI.
 
 Commands:
+    ailawfirm_usa reception               Boot the brain, verify specialists, show recap
+    ailawfirm_usa ask "<question>"        One-shot query — routes to the right specialist
+    ailawfirm_usa chat                    Interactive session — every line is routed
+    ailawfirm_usa recap [-n N]            Show recent-session retrospective memory
+    ailawfirm_usa mine <dir> [--mode M]   Mine project files into the palace
     ailawfirm_usa init <dir>              Detect rooms from folder structure
-    ailawfirm_usa mine <dir>              Mine project files (default)
-    ailawfirm_usa mine <dir> --mode convos    Mine conversation exports
-    ailawfirm_usa search "query"          Find anything, exact words
-    ailawfirm_usa status                  Show what's been filed
     ailawfirm_usa court "scotus"          Look up a US federal court
     ailawfirm_usa cite "347 U.S. 483"     Validate Bluebook citation
     ailawfirm_usa calendar add ...        Add ICS calendar entry
+    ailawfirm_usa update [--quiet]        Pull latest firm code from upstream
+    ailawfirm_usa connect-local [--yes]   Install Ollama + Qwen3 + write config
+
+Engine source: github.com/MemPalace/mempalace (MIT)
 """
 
 import argparse
@@ -19,12 +24,12 @@ from .update import cmd_update, copy_claude_md_template
 
 WELCOME_BANNER = """
 ═══════════════════════════════════════════════════════════════════
-  AI Brain — USA · Solo Edition · v0.1.0
+  AI Brain — USA · Solo Edition · v2.0.0
 
   Welcome · Bienvenido · 欢迎 · Mabuhay
   Chào mừng · أهلاً وسهلاً · Bienvenue
 ═══════════════════════════════════════════════════════════════════
-  v0.1 = Federal-focused. State-specific modules in v0.2+.
+  v2.0 = terminal brain wired end-to-end (reception · ask · chat · recap)
   CURRENCY: ABA Opinion 512 · TCJA Sunset · NextGen Bar · UCC Art 12
 ═══════════════════════════════════════════════════════════════════
 """

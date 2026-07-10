@@ -39,6 +39,13 @@ Earlier the brain (classify → route → specialists) was not wired to the term
 Every specialist is **AI-backed** by whatever host you launch it under (Claude · GLM · Codex — it reads your `ANTHROPIC_*` environment), grounded on a deterministic engine so answers stay accurate. It runs under **any** host CLI — a `UserPromptSubmit` hook + `AGENTS.md` route every query through the brain instead of the model free-answering. Free public edition — no enterprise features.
 
 
+## 🛠 Recent fixes
+
+- **Unified the ChromaDB collection name** — drawers written through the MCP server now live in the same collection (`ailawfirm_usa_drawers`, sourced from `BrainConfig().collection_name`) that the search and CLI paths read from. Previously the MCP server wrote to one collection while `searcher.py` / `miner.py` / `layers.py` / `convo_miner.py` read from a hardcoded `"brain_drawers"`, so MCP-written drawers were unfindable by search. All call sites now resolve the same name.
+- **Removed dead code** — deleted `KnowledgeGraph.seed_from_entity_facts` (referenced a non-existent `fact_checker.py` module and was never called) and the no-op `_ = signal_categories - {"pronoun"}` line in `entity_detector.py`.
+- **Consolidated duplicate stopword lists** — `entity_detector.STOPWORDS` and `dialect._STOP_WORDS` had drifted apart and each contained internal duplicates. Both now import from a single `ailawfirm_usa/stopwords.py` whose `STOPWORDS` is the exact union of both originals — every word preserved, no word dropped, duplicates removed once.
+
+
 > 📌 **v0.1 scope: FEDERAL.** State-specific procedural modules ship in v0.2+. State enums scaffolding (50 states + DC + territories) is present in v0.1 as placeholders. See [SCOPE.md](SCOPE.md).
 
 > ⚠️ **AI can make mistakes. Always verify the output.**
@@ -170,11 +177,11 @@ Sample commands:
 
 **Architecture — three pieces decide your privacy posture:**
 
-**(1) Local-only state.** Your matters, drafts, audit logs, calendar entries, and configuration live in `~/.ailawfirm_usa/`. Never uploaded by the tool. Never synced to a third-party cloud by the tool. No telemetry. No "anonymous usage statistics." The publisher operates zero infrastructure and cannot access this folder. Verifiable via `grep -ri "telemetry\|analytics\|requests.post\|urlopen" ailawfirm_usa/` — should return only user-initiated cloud-LLM calls.
+**(1) Local-only state.** Your matters, drafts, audit logs, calendar entries, and configuration live in `~/.ailawfirm-usa/`. Never uploaded by the tool. Never synced to a third-party cloud by the tool. No telemetry. No "anonymous usage statistics." The publisher operates zero infrastructure and cannot access this folder. Verifiable via `grep -ri "telemetry\|analytics\|requests.post\|urlopen" ailawfirm_usa/` — should return only user-initiated cloud-LLM calls.
 
 **(2) LLM backend — you choose.** The default `connect-local` command configures Ollama + Qwen3 to run the language model on your laptop (truly nothing leaves). If you opt into a cloud-LLM tier (DeepSeek / Claude / Gemini) for quality reasons, see the tier table above for cost + privacy trade-offs.
 
-**(3) Pseudonymisation Gateway — always-on for cloud mode.** When you configure a cloud-LLM provider in `~/.ailawfirm_usa/config.json`, the internalised `PseudonymisationGateway` (source: `ailawfirm_usa/pseudonymisation.py`) automatically substitutes real names, government IDs (SSN · ITIN · EIN · Aadhaar for Indian-diaspora matters), contact identifiers (phone · email), and case references (federal docket numbers) with deterministic placeholders BEFORE the prompt leaves your machine. The placeholder ↔ original map lives in memory only (never written to disk; destroyed when the gateway goes out of scope). Cloud vendors see only the abstract structure of the matter; the user sees real values restored in the response.
+**(3) Pseudonymisation Gateway — always-on for cloud mode.** When you configure a cloud-LLM provider in `~/.ailawfirm-usa/config.json`, the internalised `PseudonymisationGateway` (source: `ailawfirm_usa/pseudonymisation.py`) automatically substitutes real names, government IDs (SSN · ITIN · EIN · Aadhaar for Indian-diaspora matters), contact identifiers (phone · email), and case references (federal docket numbers) with deterministic placeholders BEFORE the prompt leaves your machine. The placeholder ↔ original map lives in memory only (never written to disk; destroyed when the gateway goes out of scope). Cloud vendors see only the abstract structure of the matter; the user sees real values restored in the response.
 
 **HIPAA-PHI matters in cloud mode** additionally require an executed Business Associate Agreement with the vendor per 45 CFR §164.504(e). Gateway sanitisation reduces but does not eliminate Covered Entity obligations — verify the Gateway's coverage of the specific PHI identifiers in your matter AND have the BAA in place before invoking cloud mode for PHI work.
 
@@ -217,7 +224,7 @@ If your matter is:
 - **HIPAA / GLBA / FERPA / state-privacy special-category data** → Stay in `connect-local` (Ollama + Qwen3) mode. Do not opt into any cloud-LLM tier for these matters; do not use free-tier Gemini.
 - **State secrets / classified material / under-seal court orders** → Stay in `connect-local` (Ollama + Qwen3) mode. For physically air-gapped networks where the pip-install / model-download / auto-update paths are also prohibited, await the v0.3+ signed offline-install bundle below.
 
-The firm's audit log captures every API call (timestamp, agent, prompt-summary, output-summary) at `~/.ailawfirm_usa/audit_logs/`. Logs never leave your machine. They are your professional-conduct compliance trail.
+The firm's audit log captures every API call (timestamp, agent, prompt-summary, output-summary) at `~/.ailawfirm-usa/audit_logs/`. Logs never leave your machine. They are your professional-conduct compliance trail.
 
 ### v0.3+ roadmap
 
