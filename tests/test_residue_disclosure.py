@@ -122,16 +122,16 @@ def test_llm_complete_audits_and_still_replies(monkeypatch, tmp_path):
     assert "Maria Gonzalez" in out  # restored in reply
 
 
-# ── review hardening (2026-07-12): locks fixes #3 (ZIP) + #4 (residue skip) ──
+# ── Review hardening (2026-07-12): locks fixes #3 (ZIP) + #4 (residue skip) ──
 def test_zip_code_is_now_masked():
-    """finding #3: ZIP_RE was defined but unregistered — README claimed ZIP coverage."""
+    """Hardening #3: ZIP_RE was defined but unregistered — README claimed ZIP coverage."""
     gw = PseudonymisationGateway()
     clean, _ = gw.sanitize("Serve the notice to the office at 90210 by Friday.")
     assert "90210" not in clean
 
 
 def test_residue_surfaces_name_with_one_common_word():
-    """finding #4: `all`-skip means a real name with one common-word part still surfaces."""
+    """Hardening #4: `all`-skip means a real name with one common-word part still surfaces."""
     gw = PseudonymisationGateway()
     # "Court" is a common non-name word; the person "Marcus Court" must still be flagged.
     residue = gw.detect_residue("Please add Marcus Court to the witness list.")
