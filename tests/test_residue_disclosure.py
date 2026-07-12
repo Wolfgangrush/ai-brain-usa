@@ -1,5 +1,5 @@
-"""Acceptance tests (internal) for Residue Disclosure + Audit Log (v0.1.2).
-The implementation must make ALL of these pass, plus the pre-existing suite.
+"""Acceptance tests for Residue Disclosure + Audit Log (v0.1.2).
+This layer must satisfy ALL of these, plus the pre-existing suite.
 Locks the two-promise reconciliation: residue is surfaced, but the on-disk audit log
 contains NO raw PII (only sha256 hashes + counts)."""
 
@@ -61,7 +61,7 @@ def test_write_audit_is_pii_free(tmp_path):
         "residue_lengths": [13],
     }
     path = write_audit(
-        disc, model="glm-5.2", base_url="https://api.z.ai/api/anthropic", config_dir=str(tmp_path)
+        disc, model="test-model", base_url="https://api.example.test/v1", config_dir=str(tmp_path)
     )
     assert path is not None
     content = open(path).read()
@@ -72,7 +72,7 @@ def test_write_audit_is_pii_free(tmp_path):
     assert rec["masked_counts"]["PERSON"] == 2
     assert rec["residue_count"] == 1
     # host only, no full URL path / key
-    assert rec["base_url_host"] == "api.z.ai"
+    assert rec["base_url_host"] == "api.example.test"
 
 
 def test_write_audit_swallows_io_errors():
@@ -106,9 +106,9 @@ class _FakeResp:
 def test_llm_complete_audits_and_still_replies(monkeypatch, tmp_path):
     from ailawfirm_usa.brain import llm
 
-    monkeypatch.setenv("ANTHROPIC_BASE_URL", "https://api.z.ai/api/anthropic")
+    monkeypatch.setenv("ANTHROPIC_BASE_URL", "https://api.example.test/v1")
     monkeypatch.setenv("ANTHROPIC_AUTH_TOKEN", "k")
-    monkeypatch.setenv("ANTHROPIC_MODEL", "glm-5.2")
+    monkeypatch.setenv("ANTHROPIC_MODEL", "test-model")
     monkeypatch.setenv("HOME", str(tmp_path))  # audit lands under tmp HOME
     seen = {}
 
