@@ -2,8 +2,8 @@
 deadline_agent — limitation / hearing dates (v0.1 stub).
 
 v0.1: returns a placeholder.
-v0.2+: real limitation-period engine (Limitation Act 1963 schedule)
-+ hearing-date tracker.
+v0.2+: real statute-of-limitations engine (federal 28 U.S.C. § 1658 catch-all +
+per-state SOL tables) + court-deadline / FRCP-time-computation tracker.
 
 PROVENANCE: STUB.
 """

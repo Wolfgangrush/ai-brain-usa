@@ -13,10 +13,10 @@ This guide is honest about every option. No marketing fluff. Read before you pic
 
 | Option | Where it runs | Who can see your queries | Cost | Best for |
 |---|---|---|---|---|
-| 🥇 **Ollama + Qwen3 (local)** | Your laptop | ONLY you | ₹0 forever | **Client matters · DPDP-sensitive work · Court drafts** |
-| 🥈 **DeepSeek API** | DeepSeek servers (China) | DeepSeek (unless opted-out) | ~₹80-200/mo moderate use | NON-client work · drafting templates · research summaries |
-| 🥉 **Claude API** | Anthropic servers (USA) | Anthropic (per their privacy policy) | ~₹1500-5000/mo | Heavy daily users after first paid engagement |
-| 🥉 **Gemini API** | Google servers (USA + globally) | Google | ~₹500-2000/mo | Long-PDF reads · large research synthesis |
+| 🥇 **Ollama + Qwen3 (local)** | Your laptop | ONLY you | $0 forever | **Client matters · DPDP-sensitive work · Court drafts** |
+| 🥈 **DeepSeek API** | DeepSeek servers (China) | DeepSeek (unless opted-out) | ~$80-200/mo moderate use | NON-client work · drafting templates · research summaries |
+| 🥉 **Claude API** | Anthropic servers (USA) | Anthropic (per their privacy policy) | ~$1500-5000/mo | Heavy daily users after first paid engagement |
+| 🥉 **Gemini API** | Google servers (USA + globally) | Google | ~$500-2000/mo | Long-PDF reads · large research synthesis |
 
 ---
 
@@ -92,7 +92,7 @@ DeepSeek's privacy policy says they **may use your API inputs and outputs for se
 ### MANDATORY setup before using DeepSeek with any client data
 
 1. Sign up at https://platform.deepseek.com
-2. Top up $10-20 (~₹850-₹1700)
+2. Top up $10-20 (~$850-$1700)
 3. **Go to Settings → Privacy → toggle OFF "Improve the model for everyone"** — this is the opt-out
 4. Settings → API Keys → Create New Key → copy the `sk-...` string immediately
 5. **Verify the opt-out by reloading the page** — it must show OFF
@@ -125,8 +125,8 @@ Add to `~/.ailawfirm-india/config.json`:
 - Anything covered by attorney-client privilege
 
 ### Cost reality
-- ~$0.50-2 per heavy day (~₹40-170/day for high-volume drafting)
-- Light personal use: $0.10-0.30/day (~₹8-25/day)
+- ~$0.50-2 per heavy day
+- Light personal use: $0.10-0.30/day
 - $10 lasts most users 4-8 weeks
 
 ---
@@ -143,7 +143,7 @@ Per Anthropic's policy: **API customer data is NOT used to train models by defau
 
 ### Setup
 1. Sign up at https://console.anthropic.com
-2. Add billing · top up $20-50 (~₹1700-4200)
+2. Add billing · top up $20-50
 3. API Keys → Create → copy `sk-ant-...`
 
 ### Connect
@@ -156,11 +156,11 @@ Per Anthropic's policy: **API customer data is NOT used to train models by defau
 ```
 
 ### Cost reality
-- Heavy daily use: $30-150/month (~₹2500-12500/month)
-- Light personal use: $5-20/month (~₹400-1700/month)
+- Heavy daily use: $30-150/month
+- Light personal use: $5-20/month
 
 ### When this makes sense
-- You're billing >₹40,000/month and the tool is doing >5hr/week of real work for you
+- You're billing >$500/month and the tool is doing >5hr/week of real work for you
 - You handle complex matters where the model's reasoning quality matters
 
 ---

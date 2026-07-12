@@ -63,6 +63,48 @@ def complete(
     if not key:
         raise LLMError("no ANTHROPIC_AUTH_TOKEN / ANTHROPIC_API_KEY in env")
 
+    # ── Privacy gateway (whole-brain) ────────────────────────────────────────
+    # EVERY cloud egress in the brain funnels through this one function, so
+    # pseudonymising the user prompt HERE covers chat, matters, drafting, and
+    # RAG alike. Real client names / IDs are replaced with placeholders before
+    # the bytes leave the machine, and restored in the model's reply. The
+    # placeholder↔original map lives only for this call (never persisted).
+    # Coverage limit: government IDs + honorific/context-anchored party names.
+    # A bare, un-anchored arbitrary name still needs NER (v0.2.1) — for truly
+    # confidential matters, use local mode. (README "Pseudonymisation coverage".)
+    import sys as _sys
+
+    from ailawfirm_usa.pseudonymisation import PseudonymisationGateway
+    from ailawfirm_usa.pseudonymisation_audit import write_audit
+
+    _gw = PseudonymisationGateway()
+    user, _token_map, _disc = _gw.sanitize_with_disclosure(user)
+
+    # Surface residue (possibly-unmasked names the gateway couldn't anchor) so the
+    # attorney retains the final call — brain-frame: warn, never block (C2).
+    # Guard on isatty(): only print the raw candidates to a REAL interactive terminal.
+    # If stderr is redirected to a file (daemon/CI/`2>log`), we do NOT print the names —
+    # the PII-free audit log still records that residue occurred (count + hashes), so
+    # nothing raw ever lands on disk (C1).
+    if _disc.get("residue") and _sys.stderr.isatty():
+        print(
+            f"⚠️  pseudonymisation: {len(_disc['residue'])} item(s) may not be fully "
+            f"masked (review; your call): {_disc['residue']}",
+            file=_sys.stderr,
+        )
+    # PII-FREE audit log — best-effort; write_audit swallows internally, and we wrap
+    # the call site too (defense-in-depth) so audit can NEVER break a cloud call (C4).
+    try:
+        from ailawfirm_usa.config import BrainConfig
+
+        _cfg_dir = BrainConfig().config_dir
+    except Exception:
+        _cfg_dir = os.path.expanduser("~/.ailawfirm-usa")
+    try:
+        write_audit(_disc, model=model, base_url=base_url, config_dir=_cfg_dir)
+    except Exception:
+        pass
+
     url = (base_url or "https://api.anthropic.com").rstrip("/") + "/v1/messages"
 
     headers = {
@@ -99,6 +141,7 @@ def complete(
         raise LLMError(f"malformed response (non-JSON): {exc}") from exc
 
     try:
-        return parsed["content"][0]["text"]
+        # Restore real values in the model's reply before handing it back.
+        return _gw.desanitize(parsed["content"][0]["text"], _token_map)
     except (KeyError, IndexError, TypeError) as exc:
         raise LLMError(f"malformed response: missing content[0].text ({exc})") from exc

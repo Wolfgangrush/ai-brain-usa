@@ -6,7 +6,7 @@
 
 ### 1. Every drafted document ships as .md AND .docx — paired, atomically
 
-For every legal document this firm produces — complaint, petition, affidavit, reply, plaint, notice, advisory, sale-deed analysis, opinion, tax form, ANY draft — produce BOTH a markdown file AND a Word file in the same directory, in the same tool call window.
+For every legal document this firm produces — complaint, answer, motion, brief, memorandum, declaration, retainer agreement, demand letter, discovery request, advisory, opinion, ANY draft — produce BOTH a markdown file AND a Word file in the same directory, in the same tool call window.
 
 - Markdown is for the firm: search, diff, version-control, audit.
 - Word is for the registry and the client: courts accept .docx, clients open .docx.
@@ -26,7 +26,7 @@ Nothing about a matter, a client, or a draft leaves this laptop unless the advoc
 
 ### 3. BCI Rule 36 firewall
 
-Before publishing or sending anything to the public — LinkedIn post, website copy, brochure, cold email — run the `/compliance` command (Gemini) or invoke the compliance skill (Claude). It catches solicitation/advertising language that violates Bar Council Rule 36 BEFORE you hit publish.
+Before publishing or sending anything to the public — LinkedIn post, website copy, brochure, cold email — run the `/compliance` command (Gemini) or invoke the compliance skill (Claude). It catches solicitation/advertising language that violates ABA Model Rule 7.1–7.3 (and your state's adopted analog) BEFORE you hit publish.
 
 ### 4. Citations get checked, never invented
 
@@ -60,7 +60,7 @@ After updating, this `CLAUDE.md` file is NOT overwritten (it's your firm's custo
 
 - **Firm name:** <FIRM_NAME>
 - **Principal advocate:** <ADVOCATE_NAME>
-- **Bar Council enrolment:** <ENROLMENT_NO>
+- **State bar number(s):** <BAR_NUMBER — state(s) of admission>
 - **Practice location:** <CITY, STATE>
 - **Practice focus:** <PRACTICE_AREAS>
 - **AI model in use:** <MODEL_NAME — see MODEL_SETUP.md>
@@ -71,6 +71,6 @@ After updating, this `CLAUDE.md` file is NOT overwritten (it's your firm's custo
 
 Add your own rules below. They survive `ailawfirm-usa update`.
 
-- (e.g., "Always check if the matter is in JMFC the local court — that bench requires 3 hard copies for filing")
-- (e.g., "For sale deed analysis, ALWAYS fetch the 7/12 extract before reporting on ownership status")
-- (e.g., "Bail applications need the FIR copy attached as Annexure A by default")
+- (e.g., "Always check the district's local rules for chambers-copy and page-limit requirements before filing")
+- (e.g., "For any real-property matter, ALWAYS pull the title report / recorded deed before reporting on ownership status")
+- (e.g., "Every federal complaint needs a civil cover sheet (JS-44) and summons prepared by default")

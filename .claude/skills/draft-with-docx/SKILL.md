@@ -1,27 +1,26 @@
 ---
 name: draft-with-docx
-description: Pair every drafted document with a Word (.docx) file. When the advocate asks for a draft — complaint, petition, affidavit, reply, plaint, sale-deed analysis, advisory note, opinion, anything filed or sent — produce BOTH the markdown AND the .docx in the same directory. Word is what the registry accepts and what clients open. Markdown is what the firm reads and diffs. Both must exist.
+description: Pair every drafted document with a Word (.docx) file. When the attorney asks for a draft — complaint, motion, brief, memorandum, retainer agreement, demand letter, discovery request, advisory note, opinion, anything filed or sent — produce BOTH the markdown AND the .docx in the same directory. Word is what courts accept and what clients open. Markdown is what the firm reads and diffs. Both must exist.
 allowed-tools: Bash, Read, Write, Edit
 ---
 
 # /draft-with-docx — Every Draft Ships as .md + .docx
 
-The advocate's filing reality: US courts accept Word, not markdown. The firm reads markdown. Both audiences exist. So every drafted document produces two files, atomically, in the matter's drafts directory.
+The attorney's filing reality: US courts accept Word, not markdown. The firm reads markdown. Both audiences exist. So every drafted document produces two files, atomically, in the matter's drafts directory.
 
 ## When this skill fires
 
 Any time the firm produces a written legal document:
 
-- Pleadings (complaint, plaint, written statement, replication, counter-claim)
-- Petitions (writ, SLP, review, curative, transfer, contempt)
-- Criminal pleadings (bail, anticipatory bail, 482 CrPC / 528 BNSS, revision, appeal)
-- Civil applications (Section 9 Arb, Section 11 Arb, Order 39 R.1-2, O.7 R.11)
-- Affidavits (verification, counter-affidavit, rejoinder)
-- Replies (to show-cause, notice, affidavit)
-- Notices (legal notice, Section 80 CPC, Section 138 NI demand)
-- Advisory notes, legal opinions, due-diligence reports
-- Sale deed analysis, title search, property reports
-- Tax forms (Form 35, Form 36, Section 263 reply, Section 148A objection)
+- Pleadings (complaint, answer, counterclaim, cross-claim, third-party complaint, reply)
+- Motions (motion to dismiss under FRCP 12(b)(6), summary judgment under Rule 56, motion to compel, motion in limine, TRO / preliminary injunction under Rule 65)
+- Briefs & memoranda (memorandum of law, appellate brief under FRAP, trial brief)
+- Discovery (interrogatories, requests for production, requests for admission, deposition notices — Rules 26–36)
+- Affidavits & declarations (declaration under 28 U.S.C. § 1746, verification, certification)
+- Transactional documents (retainer / engagement agreement, NDA, contract, operating agreement, term sheet)
+- Notices & letters (demand letter, cease-and-desist, notice of appearance, meet-and-confer letter)
+- Advisory notes, legal opinions, due-diligence memoranda
+- Certificate of service, proposed order, notice of motion
 
 If you wrote it for the matter, it gets paired.
 
@@ -52,7 +51,7 @@ If neither is available, install pandoc:
 brew install pandoc
 # Linux
 sudo apt-get install -y pandoc
-# Windows (advocate runs this themselves in PowerShell)
+# Windows (attorney runs this themselves in PowerShell)
 winget install --id JohnMacFarlane.Pandoc
 ```
 
@@ -62,8 +61,8 @@ Inside the matter's drafts directory:
 
 ```
 ~/Desktop/<firm-name>/<matter-folder>/drafts/
-  ├── 2026-05-24-complaint-s138.md
-  └── 2026-05-24-complaint-s138.docx        ← ALWAYS paired
+  ├── 2026-05-24-complaint.md
+  └── 2026-05-24-complaint.docx        ← ALWAYS paired
 ```
 
 If the matter folder doesn't have a `drafts/` subdir, create it.
@@ -76,7 +75,7 @@ After writing both files, verify both exist:
 ls -la "<filename>.md" "<filename>.docx"
 ```
 
-Report to the advocate:
+Report to the attorney:
 
 ```
 ✍️ Draft ready (paired):
@@ -96,7 +95,7 @@ The rule resolves the audience-mismatch by producing both, every time.
 
 ## Anti-patterns (do not do)
 
-- ❌ "Here's the draft in markdown. Run pandoc when you need a docx." — pushes friction onto the advocate at filing time
+- ❌ "Here's the draft in markdown. Run pandoc when you need a docx." — pushes friction onto the attorney at filing time
 - ❌ Writing only the .docx and skipping the .md — the firm loses search/diff ability
-- ❌ Writing the .md, telling the advocate to convert later — they will forget; deadline pressure means it won't happen
+- ❌ Writing the .md, telling the attorney to convert later — they will forget; deadline pressure means it won't happen
 - ❌ Producing the .docx in a different directory than the .md — breaks the matter folder convention

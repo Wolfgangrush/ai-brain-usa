@@ -32,8 +32,8 @@ def _strip_preamble(text: str) -> str:
 def handle(payload: str) -> dict:
     """Strip NL preamble, then look up court (fuzzy match handles the rest).
 
-    v0.1.1: handles wrappings like "tell me about a High Court" →
-            extracts "a High Court" → fuzzy-matches.
+    v0.1.1: handles wrappings like "tell me about the Ninth Circuit" →
+            extracts "Ninth Circuit" → fuzzy-matches.
     """
     cleaned = _strip_preamble(payload)
     result = usa_court_lookup(cleaned)
