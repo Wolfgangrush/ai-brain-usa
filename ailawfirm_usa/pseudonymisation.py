@@ -80,7 +80,7 @@ GSTIN_RE = re.compile(r"\b\d{2}[A-Z]{3}[ABCFGHJLPT][A-Z]\d{4}[A-Z][0-9A-Z]Z[0-9A
 PHONE_RE = re.compile(r"(?:\+91[\s-]?)?[6-9]\d{9}\b")
 
 # Email
-EMAIL_RE = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b")
+EMAIL_RE = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b")
 
 # Currency amounts (Indian context): ₹ + digits with Indian grouping or numeric
 AMOUNT_RE = re.compile(r"\(?-?\s?(?:₹|Rs\.?|INR)\s?-?\d{1,3}(?:,\d{2,3})*(?:\.\d+)?\)?")
@@ -455,22 +455,20 @@ class PseudonymisationGateway:
 
     @staticmethod
     def is_safe_for_cloud(text: str) -> tuple[bool, list[str]]:
-        """Quick check: does the text appear to contain identifiers that should NOT go to cloud raw?
-        Returns (is_safe, list_of_detected_categories).
+        """Cloud-egress gate: does the text contain identifiers that must NOT go to cloud raw?
+
+        Walks the SAME canonical pattern set that sanitize() masks (a fresh gateway's base
+        patterns), applying each pattern's checksum validator when present. Closes the
+        historical fail-open where this gate hardcoded only a ~7-item subset and silently
+        waved through every other identifier that sanitize() would in fact have masked.
+        Returns (is_safe, sorted_detected_categories).
         """
-        detected = []
-        if any(aadhaar_validate(m.group(0)) for m in AADHAAR_RE.finditer(text)):
-            detected.append("AADHAAR")
-        if PAN_RE.search(text):
-            detected.append("PAN")
-        if any(gstin_validate(m.group(0)) for m in GSTIN_RE.finditer(text)):
-            detected.append("GSTIN")
-        if NAME_RE.search(text):
-            detected.append("PERSON")
-        if PHONE_RE.search(text):
-            detected.append("PHONE")
-        if EMAIL_RE.search(text):
-            detected.append("EMAIL")
-        if FIR_RE.search(text):
-            detected.append("FIR_NO")
-        return (len(detected) == 0, detected)
+        detected: set[str] = set()
+        for entry in PseudonymisationGateway().patterns:
+            pattern, entity_type, validator = (tuple(entry) + (None,))[:3]
+            for m in pattern.finditer(text):
+                if validator is not None and not validator(m.group(0)):
+                    continue
+                detected.add(entity_type)
+                break
+        return (len(detected) == 0, sorted(detected))
