@@ -36,7 +36,7 @@ Earlier the brain (classify → route → specialists) was not wired to the term
 | `chat` | interactive session — keep asking; every line is routed for you (no commands to memorise) |
 | `recap` | what you did in past sessions (memory persists across runs) |
 
-Every specialist is **AI-backed** by whatever host you launch it under (Claude · GLM · Codex — it reads your `ANTHROPIC_*` environment), grounded on a deterministic engine so answers stay accurate. It runs under **any** host CLI — a `UserPromptSubmit` hook + `AGENTS.md` route every query through the brain instead of the model free-answering. Free public edition — no enterprise features.
+Every specialist is **AI-backed** by whatever host you launch it under (Claude · GLM · Codex — it reads your `ANTHROPIC_*` environment), grounded on a deterministic engine so answers stay anchored to it. It runs under **any** host CLI — a `UserPromptSubmit` hook + `AGENTS.md` route every query through the brain instead of the model free-answering. Free public edition — no enterprise features.
 
 
 ## 🛠 Recent fixes
