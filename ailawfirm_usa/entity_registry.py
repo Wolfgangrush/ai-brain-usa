@@ -183,7 +183,9 @@ def _wikipedia_lookup(word: str) -> dict:
     Free, no API key, handles disambiguation pages.
     """
     try:
-        url = f"https://en.wikipedia.org/api/rest_v1/page/summary/{urllib.parse.quote(word)}"
+        url = (
+            f"https://en.wikipedia.org/api/rest_v1/page/summary/{urllib.parse.quote(word, safe='')}"
+        )
         req = urllib.request.Request(url, headers={"User-Agent": "Brain/1.0"})
         with urllib.request.urlopen(req, timeout=5) as resp:
             data = json.loads(resp.read())
