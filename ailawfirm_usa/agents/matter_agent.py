@@ -55,7 +55,7 @@ def _slugify(name: str) -> str:
 
 def _add_matter(text: str) -> Dict[str, Any]:
     m = re.search(r"(?:add|new)\s+matter\s+(.+)$", text.strip(), re.IGNORECASE)
-    name = (m.group(1).strip() if m else "")
+    name = m.group(1).strip() if m else ""
     if not name:
         name = f"Matter {datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}"
 
@@ -92,9 +92,7 @@ def _list_matters() -> Dict[str, Any]:
 
 
 def _lookup(text: str) -> Dict[str, Any]:
-    m = re.search(
-        r"(?:status\s+of|about|matter)\s+(.+)$", text.strip(), re.IGNORECASE
-    )
+    m = re.search(r"(?:status\s+of|about|matter)\s+(.+)$", text.strip(), re.IGNORECASE)
     if not m:
         return {
             "agent": AGENT_NAME,
