@@ -4,7 +4,7 @@
 
 If you discover a security vulnerability in AI Brain — USA, please report it via **GitHub Security Advisories** at the repository:
 
-https://github.com/Wolfgangrush/ai-law-firm-usa/security/advisories/new
+https://github.com/Wolfgangrush/ai-brain-usa/security/advisories/new
 
 Or via private email to: advrushikeshravindramahajan@gmail.com (private channel — please do NOT post vulnerabilities to public GitHub Issues).
 

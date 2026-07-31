@@ -36,9 +36,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/Wolfgangrush/ai-law-firm-usa"
-Repository = "https://github.com/Wolfgangrush/ai-law-firm-usa"
-"Bug Tracker" = "https://github.com/Wolfgangrush/ai-law-firm-usa/issues"
+Homepage = "https://github.com/Wolfgangrush/ai-brain-usa"
+Repository = "https://github.com/Wolfgangrush/ai-brain-usa"
+"Bug Tracker" = "https://github.com/Wolfgangrush/ai-brain-usa/issues"
 
 [tool.setuptools.packages.find]
 include = ["ailawfirm_usa*"]

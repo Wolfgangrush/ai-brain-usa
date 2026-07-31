@@ -11,7 +11,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-REPO_URL = "git+https://github.com/Wolfgangrush/ai-law-firm-usa.git"
+REPO_URL = "git+https://github.com/Wolfgangrush/ai-brain-usa.git"
 
 
 def cmd_update(args):

@@ -36,7 +36,7 @@ Ang BigLaw ay may mga hukbo ng associates para sa cite-checking, matter manageme
 ## Mabilis na pag-install
 
 ```bash
-pip install git+https://github.com/Wolfgangrush/ai-law-firm-usa.git
+pip install git+https://github.com/Wolfgangrush/ai-brain-usa.git
 ailawfirm_usa
 ```
 

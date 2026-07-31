@@ -35,7 +35,7 @@ Các hãng luật lớn có đội ngũ luật sư để kiểm tra trích dẫn
 ## Cài đặt nhanh
 
 ```bash
-pip install git+https://github.com/Wolfgangrush/ai-law-firm-usa.git
+pip install git+https://github.com/Wolfgangrush/ai-brain-usa.git
 ailawfirm_usa
 ```
 

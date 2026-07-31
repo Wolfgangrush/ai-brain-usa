@@ -52,7 +52,7 @@ The firm's code, skills, and prompts evolve. To pull the latest version:
 ailawfirm-usa update
 ```
 
-This runs `pip install --upgrade git+https://github.com/Wolfgangrush/ai-law-firm-usa.git` under the hood. Your matter data is NEVER touched — only firm code/skills/prompts get refreshed.
+This runs `pip install --upgrade git+https://github.com/Wolfgangrush/ai-brain-usa.git` under the hood. Your matter data is NEVER touched — only firm code/skills/prompts get refreshed.
 
 After updating, this `CLAUDE.md` file is NOT overwritten (it's your firm's customisation). If you want to pull the latest template defaults, see `templates/CLAUDE.md` in the installed package and merge manually.
 

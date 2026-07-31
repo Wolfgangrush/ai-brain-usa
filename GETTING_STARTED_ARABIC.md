@@ -35,7 +35,7 @@
 ## التثبيت السريع
 
 ```bash
-pip install git+https://github.com/Wolfgangrush/ai-law-firm-usa.git
+pip install git+https://github.com/Wolfgangrush/ai-brain-usa.git
 ailawfirm_usa
 ```
 

@@ -5,7 +5,7 @@ Thanks for wanting to help. **AI Brain — USA** is open source (MIT). Contribut
 ## Getting started
 
 ```bash
-git clone https://github.com/Wolfgangrush/ai-law-firm-usa.git
+git clone https://github.com/Wolfgangrush/ai-brain-usa.git
 cd ai-law-firm-usa
 pip install -e ".[dev]"
 ```

@@ -49,7 +49,7 @@ OR install from the official installer at https://www.python.org/downloads/macos
 In Terminal, paste:
 
 ```
-pip3 install git+https://github.com/Wolfgangrush/ai-law-firm-india.git
+pip3 install git+https://github.com/Wolfgangrush/ai-brain-india.git
 ```
 
 Wait 1-2 minutes for the download + install (~200 MB).
@@ -156,12 +156,12 @@ source ~/.zshrc
 ### "pip3 not found"
 Use:
 ```
-python3 -m pip install git+https://github.com/Wolfgangrush/ai-law-firm-india.git
+python3 -m pip install git+https://github.com/Wolfgangrush/ai-brain-india.git
 ```
 
 ### Permission errors during pip install
 Either:
-- Use `--user` flag: `pip3 install --user git+https://github.com/Wolfgangrush/ai-law-firm-india.git`
+- Use `--user` flag: `pip3 install --user git+https://github.com/Wolfgangrush/ai-brain-india.git`
 - OR use Homebrew Python (which doesn't need sudo): `brew install python@3.12` then re-run pip install
 
 ### "SSL: CERTIFICATE_VERIFY_FAILED"
@@ -180,4 +180,4 @@ This is expected for first-run indexing. Subsequent operations are fast. If it s
 
 Go to [GETTING_STARTED.md](GETTING_STARTED.md) for the tour.
 
-Issues: https://github.com/Wolfgangrush/ai-law-firm-india/issues
+Issues: https://github.com/Wolfgangrush/ai-brain-india/issues

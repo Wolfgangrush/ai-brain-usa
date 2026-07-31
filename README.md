@@ -117,7 +117,7 @@ BigLaw firms have legal-operations teams of 50+. Solo attorneys don't. We built 
 ### Step 2 — Install Python (one-time) + the tool
 
 ```bash
-pip install git+https://github.com/Wolfgangrush/ai-law-firm-usa.git
+pip install git+https://github.com/Wolfgangrush/ai-brain-usa.git
 ```
 
 ### Step 3 — Connect an AI brain (ONE COMMAND)
@@ -269,7 +269,7 @@ When a new version of AI Brain — USA is published, you pull it in with **one c
 ailawfirm-usa update
 ```
 
-Under the hood this runs `pip install --upgrade git+https://github.com/Wolfgangrush/ai-law-firm-usa.git`. After it finishes, restart any open `ailawfirm-usa` session so the new skills + prompts load.
+Under the hood this runs `pip install --upgrade git+https://github.com/Wolfgangrush/ai-brain-usa.git`. After it finishes, restart any open `ailawfirm-usa` session so the new skills + prompts load.
 
 ### Path 2 — Inside Claude Code
 
@@ -395,7 +395,7 @@ Ships AS-IS without warranty. See [LICENSE](LICENSE).
 
 ## 📞 Support
 
-- **Issues / bugs:** https://github.com/Wolfgangrush/ai-law-firm-usa/issues
+- **Issues / bugs:** https://github.com/Wolfgangrush/ai-brain-usa/issues
 - **Translation help:** [TRANSLATION_HELP_WANTED.md](TRANSLATION_HELP_WANTED.md) (Spanish · Chinese · Tagalog · Vietnamese · Arabic · French PRs welcome)
 - **State-specific feature request?** Open an issue with `[state-CA]` / `[state-NY]` / etc. label
 - **Federal feature request?** Open an issue with `[federal]` label

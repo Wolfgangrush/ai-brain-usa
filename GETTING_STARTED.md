@@ -48,7 +48,7 @@ BigLaw has armies of associates for cite-checking, matter management, and drafti
 
 ### Step 2 — Install AI Brain USA
 ```bash
-pip install git+https://github.com/Wolfgangrush/ai-law-firm-usa.git
+pip install git+https://github.com/Wolfgangrush/ai-brain-usa.git
 ```
 
 ### Step 3 — Connect an AI brain (10 min)

@@ -20,7 +20,7 @@ Tell the advocate:
 >     ailawfirm-usa update
 >
 > This pulls the latest firm code, skills, and prompts from the upstream repository:
-> https://github.com/Wolfgangrush/ai-law-firm-usa
+> https://github.com/Wolfgangrush/ai-brain-usa
 >
 > Your matter data + your project root CLAUDE.md will NOT be touched. Only the firm's internal code/skills/prompts get refreshed.
 >
@@ -44,7 +44,7 @@ If non-zero:
 
 > ❌ Update failed. Try the manual command:
 >
->     pip install --upgrade git+https://github.com/Wolfgangrush/ai-law-firm-usa.git
+>     pip install --upgrade git+https://github.com/Wolfgangrush/ai-brain-usa.git
 >
 > Common causes: no internet, pip permissions, virtual environment not activated.
 
