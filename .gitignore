@@ -20,3 +20,6 @@ BUILD-ANALYSIS.md
 COMPLETION-SPEC.md
 _v0[0-9]*_*.md
 *BMAD*
+
+# Tier-2 Open US Law full-text layer (fetched at install, never committed)
+_statute_corpus/_tier2_open_us_law/
