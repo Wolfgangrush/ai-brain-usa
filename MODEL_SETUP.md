@@ -1,5 +1,26 @@
 # 🤖 AI Model Setup — Honest Privacy Guide
 
+> ## ⚠️ STATUS — THE LOCAL-MODEL TIER IS NOT WIRED YET (as at 2026-08-16)
+>
+> **Do not rely on local mode for confidential work today.**
+>
+> `connect-local` really does install Ollama and write `ai_provider: "ollama"` into your config,
+> and the setup steps below really do work as far as they go. **But no code path in this release
+> reads that setting at inference time.** There is no request to `localhost:11434` anywhere in
+> the package. Prompts go to the configured cloud endpoint (`ANTHROPIC_BASE_URL`); if no key is
+> set, no language model runs at all and you get rule-table answers instead.
+>
+> **Until this banner is removed, assume every AI answer was cloud-processed.** The cloud path is
+> genuinely protected by the pseudonymisation gateway — that part is real, wired on every egress
+> and covered by tests — but it is *not* the "nothing leaves your laptop" position described
+> below. Any statement in this repository that a regulatory duty is satisfied by *absence of
+> transmission* does not hold today.
+>
+> Wiring the local tier is the next milestone. This notice will be removed when it ships, and
+> not before.
+
+
+
 The tool itself stores everything on your laptop. But to do "smart" work (drafting, conversation, reasoning) you connect it to an AI model. **Where that model runs determines your privacy.**
 
 This guide is honest about every option. No marketing fluff. Read before you pick.

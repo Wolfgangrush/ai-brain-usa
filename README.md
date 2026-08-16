@@ -19,7 +19,7 @@ Visit the live site: [wolfgangrush.github.io](https://wolfgangrush.github.io)
 
 # 🇺🇸 AI Brain for USA Lawyers
 
-> **Free practice OS for every US solo attorney, in-house counsel, and supervised paralegal. Federal-focused with state scaffolding. Terminal-native. Local-first by default (Ollama + Qwen3 — nothing leaves your laptop). Cloud-LLM optional with the [Pseudonymisation Gateway](https://github.com/Wolfgangrush/pseudonymisation-gateway) sanitising PII before any prompt leaves the machine.**
+> **Free practice OS for every US solo attorney, in-house counsel, and supervised paralegal. Federal-focused with state scaffolding. Terminal-native. Cloud-LLM behind the [Pseudonymisation Gateway](https://github.com/Wolfgangrush/pseudonymisation-gateway) sanitising PII before any prompt leaves the machine.**
 
 **For licensed attorneys only.** Intended for attorneys admitted in any US state, the District of Columbia, any US federal court, in-house counsel of US entities, registered Foreign Legal Consultants, and paralegals working under direct attorney supervision. **If you are not a licensed attorney, do not use this tool to produce client-facing legal work.** State UPL rules apply — strictest enforcement in CA · TX · FL · NY · IL · DC. Read [DISCLAIMER.md](DISCLAIMER.md) before installation.
 
@@ -137,9 +137,19 @@ After this, **no queries leave your laptop**.
 
 Three honest model options — see [MODEL_SETUP.md](MODEL_SETUP.md):
 
+
+> ### ⚠️ Local-model tier is NOT wired yet (2026-08-16)
+> The local Ollama tier described below is **not implemented in this release** — no code path
+> routes inference to Ollama, so nothing in this repository currently delivers the
+> "nothing leaves your laptop" position, and no regulatory duty here is satisfied by *absence of
+> transmission* today. The **cloud path and its pseudonymisation gateway are real** (wired on
+> every egress, covered by tests). Assume every AI answer is cloud-processed until this notice is
+> removed. See `MODEL_SETUP.md`.
+
+
 | Choice | Cost | Privacy | Best for |
 |---|---|---|---|
-| 🥇 **Local Ollama + Qwen3** | $0 forever | 🟢 Perfect — nothing leaves your laptop | **Client matters · ABA Rule 1.6 confidentiality · HIPAA-PHI · privileged communications · use this tier when zero cross-border data flow is required** |
+| 🚧 **Local Ollama + Qwen3** | $0 forever | ⛔ **NOT WIRED YET** — this tier is not implemented in this release; no duty is satisfied by absence of transmission today | *(planned — next milestone)* |
 | 🥈 **DeepSeek API** | ~$2-5/mo | ⚠️ Pseudonymisation Gateway sanitises party names + SSN/ITIN/EIN before transmission, BUT China-routed transmission of even pseudonymised data for US client matter raises ABA Rule 1.6 + state-AG questions | Non-client work · public-law research · templates |
 | 🥉 **Claude / Gemini API** | ~$25-80/mo | 🟢 Strong (enterprise privacy default-ON) — Gateway sanitises before transmission; vendor BAA available | Heavy daily users with executed BAA + state-privacy DPA + clear state-bar opinion on cloud AI use. **⚠️ HIPAA PHI in cloud mode** requires (a) Gateway coverage of the specific PHI identifiers in your matter AND (b) executed Business Associate Agreement with the vendor per 45 CFR §164.504(e) — Gateway sanitisation alone does not discharge the BAA obligation |
 
@@ -228,7 +238,7 @@ The firm's audit log captures every API call (timestamp, agent, prompt-summary, 
 
 ### v0.3+ roadmap
 
-> What v0.1 already ships: (a) local-LLM default via `connect-local` (Ollama + Qwen3 — nothing leaves your laptop in local mode), (b) configurable cloud-LLM tier covering Claude / OpenAI / paid Gemini / DeepSeek, (c) Pseudonymisation Gateway sanitising PII before any cloud-LLM call, and (d) no first-party telemetry. The items below extend the floor — they are not a future replacement for what is already shipped.
+> What v0.1 already ships: (a) `connect-local` (prepares the machine for a local model; inference is **not** yet routed locally), (b) configurable cloud-LLM tier covering Claude / OpenAI / paid Gemini / DeepSeek, (c) Pseudonymisation Gateway sanitising PII before any cloud-LLM call, and (d) no first-party telemetry. The items below extend the floor — they are not a future replacement for what is already shipped.
 
 - **Signed offline-install bundle** — the `pip install` path currently touches PyPI and the Ollama model registry; v0.3+ ships a signed offline-installable archive with the Qwen3 model pre-bundled, removing the last network-touch point even at install time. For attorneys on physically air-gapped networks (sealed-matter rooms, security-cleared environments).
 - **In-firm LLM tenant adapter** — drop-in config for Azure OpenAI / private Vertex / on-prem vLLM endpoints. Distinct from the today-shipped public-API cloud-LLM tier; targets attorneys whose firm already provisions LLM infrastructure under its own BAA / DPA.

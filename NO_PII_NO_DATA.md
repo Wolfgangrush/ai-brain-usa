@@ -1,5 +1,21 @@
 # NO_PII_NO_DATA — Zero-Collection Architecture (USA)
 
+> ## ⛔ CORRECTION (2026-08-16) — the local-only mode referred to below is NOT IMPLEMENTED
+>
+> This document points you to "local-only mode" for confidential work. **That mode is not wired
+> in this release.** No code path routes inference to a local model, so **no obligation described
+> below is discharged by absence of transmission today.**
+>
+> What IS true: the cloud path sanitises identifiers through the pseudonymisation gateway before
+> any prompt leaves the machine, on every egress, covered by tests. That is a real technical
+> safeguard — but it is a safeguard, not the "no transmission occurs" position, and it does not
+> discharge your own controller/fiduciary duties.
+>
+> **Treat every AI answer as cloud-processed until this notice is removed.** For work you cannot
+> transmit, do not use the AI features of this tool at present.
+
+
+
 **This document explains, in detail, why AI Brain — USA collects no personal information from you, and what that means under CCPA · CPRA · state privacy laws · HIPAA · GLBA · FERPA.**
 
 ## The short version
