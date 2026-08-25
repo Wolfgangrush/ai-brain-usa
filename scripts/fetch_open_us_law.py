@@ -37,6 +37,45 @@ from collections.abc import Iterable, Iterator
 from datetime import datetime, timezone
 from pathlib import Path
 
+DATASET_ID = "vaquill/open-us-law"
+
+
+def _allowed_roots() -> tuple[Path, ...]:
+    """Roots a user-supplied path is permitted to resolve into.
+
+    The user's own home directory, this repository, and the per-user temporary
+    directory (building a throwaway database under ``tmp`` is ordinary usage and
+    is not a privilege boundary). Everything else — /etc, /usr, /System, another
+    user's home — is out of bounds for a dataset fetcher.
+    """
+    return (
+        Path.home().resolve(),
+        Path(__file__).resolve().parent.parent,
+        Path(tempfile.gettempdir()).resolve(),
+    )
+
+
+def _safe_path(candidate, *, what: str) -> Path:
+    """Resolve `candidate` and refuse it if it escapes the allowed roots.
+
+    Resolution follows ``..`` and symlinks first, so ``/tmp/../etc/cron.d/x``
+    and ``~/../../etc/x`` are both caught. The check runs BEFORE any filesystem
+    call, so a refused path never leaves a directory or file behind.
+
+    This script is documented for attorneys to run directly and is increasingly
+    run by an agent on their behalf, so a malformed or attacker-influenced
+    ``--dest`` / ``--cache-dir`` must not be able to create or replace anything
+    outside the user's own space.
+    """
+    resolved = Path(candidate).expanduser().resolve()
+    for root in _allowed_roots():
+        if resolved == root or root in resolved.parents:
+            return resolved
+    permitted = " or ".join(str(root) for root in _allowed_roots())
+    raise ValueError(
+        f"{what} resolves outside the permitted area: {resolved}. Choose a path under {permitted}."
+    )
+
 
 SCHEMA_COLUMNS: list[str] = [
     "act_id",
@@ -124,7 +163,7 @@ def build_db(
     fetched_at: str,
     extra_manifest: dict | None = None,
 ) -> None:
-    db_path = Path(db_path)
+    db_path = _safe_path(db_path, what="--dest")
     db_path.parent.mkdir(parents=True, exist_ok=True)
 
     ddl = (
@@ -188,7 +227,7 @@ def build_db(
             )
 
             manifest_entries: list[tuple] = [
-                ("dataset", "vaquill/open-us-law"),
+                ("dataset", DATASET_ID),
                 ("license", "CC-BY-4.0"),
                 ("mode", mode),
                 ("fetched_at", fetched_at),
@@ -274,6 +313,12 @@ def _parquet_rows(parquet_path: Path) -> Iterator[dict]:
 
 
 def fetch_full(cache_dir=None) -> tuple[dict[str, Iterator[dict]], str]:
+    # Validate arguments before anything else — a hostile --cache-dir must be
+    # refused whether or not the optional dependencies happen to be installed.
+    if cache_dir is None:
+        cache_dir = Path.home() / ".cache" / "huggingface" / "vaquill_open_us_law"
+    cache_dir = _safe_path(cache_dir, what="--cache-dir")
+
     try:
         import pyarrow.parquet  # noqa: F401
         from huggingface_hub import HfApi, snapshot_download
@@ -284,17 +329,14 @@ def fetch_full(cache_dir=None) -> tuple[dict[str, Iterator[dict]], str]:
         ) from exc
 
     try:
-        revision = HfApi().dataset_info("vaquill/open-us-law").sha or "unknown"
+        revision = HfApi().dataset_info(DATASET_ID).sha or "unknown"
     except Exception:
         revision = "unknown"
 
-    if cache_dir is None:
-        cache_dir = Path.home() / ".cache" / "huggingface" / "vaquill_open_us_law"
-    cache_dir = Path(cache_dir)
     cache_dir.mkdir(parents=True, exist_ok=True)
 
     snapshot_download(
-        repo_id="vaquill/open-us-law",
+        repo_id=DATASET_ID,
         repo_type="dataset",
         allow_patterns=["*.parquet"],
         local_dir=str(cache_dir),
@@ -382,7 +424,7 @@ def main(argv=None) -> int:
         mode = "sample"
 
     fetched_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    dest: Path = args.dest
+    dest: Path = _safe_path(args.dest, what="--dest")
     dest.parent.mkdir(parents=True, exist_ok=True)
 
     if mode == "sample":
