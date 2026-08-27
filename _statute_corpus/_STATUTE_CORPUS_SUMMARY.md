@@ -69,3 +69,11 @@ All digests cite primary sources at the United States Government Publishing Offi
 ## File count
 
 23 digests + this Summary + the Index = 25 files in `_statute_corpus/`.
+
+## Tier-2 full-text layer (companion to this corpus)
+
+The 23 digests above are Tier-1: curated, verbatim-excerpted, STATUS: VERIFIED at compilation. Since 2026-08 the firm also carries a **Tier-2 full-text statutory lookup** — the complete text of 50-state + DC + PR statutory codes, state constitutions, and the US Code (2.04M+ sections) sourced from the open **Open US Law** dataset by Vaquill AI (HuggingFace `vaquill/open-us-law`, CC-BY-4.0; US primary law itself is public domain per *Georgia v. Public.Resource.Org*, 590 U.S. 255 (2020)).
+
+- Built locally by `scripts/fetch_open_us_law.py` into `_tier2_open_us_law/open_us_law.sqlite3` (gitignored — fetched, never committed).
+- Queried by `ailawfirm_usa/tier2_statutes.py` (stdlib-only; exact-citation lookup + FTS5 full-text search).
+- **Discipline:** Tier-2 is a LOOKUP layer, not a verified layer. Currency is not uniform (`act_status="snapshot"` rows are unrefreshed, good-law status unknown). Every Tier-2 section carries its recorded `source_url` (dataset provenance — may be absent or non-official) and must be re-verified at the official government code site before any filing — the Tier-1 STATUS: VERIFIED flag does not transfer.
