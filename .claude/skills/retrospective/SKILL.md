@@ -41,7 +41,7 @@ Review the current conversation for:
 ### Step 2: Run 2-pass leak-check (above)
 
 ### Step 3: If passes leak-check, write session summary
-Save to `.ailawfirm-usa/sessions/` with timestamp. Format:
+Save to `.aibrain-usa/sessions/` with timestamp. Format:
 ```markdown
 # Session — YYYY-MM-DD HH:MM
 - Specialists used: [list]

@@ -1,7 +1,7 @@
 """Tests for brain classifier — USA v0.1."""
 
-from ailawfirm_usa.brain.classifier import classify
-from ailawfirm_usa.brain.intents import Intent
+from aibrain_usa.brain.classifier import classify
+from aibrain_usa.brain.intents import Intent
 
 
 def test_classifies_calendar_query():

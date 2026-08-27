@@ -7,7 +7,7 @@ Architecture under test:
   Tier-1 = curated ``_statute_corpus`` digests (STATUS: VERIFIED, hand-shaped).
   Tier-2 = ``vaquill/open-us-law`` full-text lookup (CC-BY-4.0), fetched into
            a local SQLite FTS5 database by ``scripts/fetch_open_us_law.py`` and
-           queried by ``ailawfirm_usa.tier2_statutes`` (stdlib only at runtime).
+           queried by ``aibrain_usa.tier2_statutes`` (stdlib only at runtime).
 """
 
 import importlib.util
@@ -16,8 +16,8 @@ from pathlib import Path
 
 import pytest
 
-from ailawfirm_usa import tier2_statutes
-from ailawfirm_usa.tier2_statutes import DISCLAIMER, Tier2Statutes
+from aibrain_usa import tier2_statutes
+from aibrain_usa.tier2_statutes import DISCLAIMER, Tier2Statutes
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 

@@ -3,7 +3,7 @@ requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ailawfirm_usa"
+name = "aibrain_usa"
 version = "0.1.0"
 description = "AI Brain — USA Solo edition. Federal-focused practice OS for US solo practitioners. Built on local memory architecture."
 readme = "README.md"
@@ -41,13 +41,13 @@ Repository = "https://github.com/Wolfgangrush/ai-brain-usa"
 "Bug Tracker" = "https://github.com/Wolfgangrush/ai-brain-usa/issues"
 
 [tool.setuptools.packages.find]
-include = ["ailawfirm_usa*"]
+include = ["aibrain_usa*"]
 
 [tool.setuptools.package-data]
-ailawfirm_usa = ["templates/*.md", "templates/*.toml"]
+aibrain_usa = ["templates/*.md", "templates/*.toml"]
 
 [project.scripts]
-ailawfirm_usa = "ailawfirm_usa:main"
+aibrain_usa = "aibrain_usa:main"
 
 [project.optional-dependencies]
 dev = ["pytest>=7.0", "build>=1.0", "twine>=4.0"]

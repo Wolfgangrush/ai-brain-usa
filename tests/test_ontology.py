@@ -1,6 +1,6 @@
 """Tests for ontology module — USA v0.1."""
 
-from ailawfirm_usa.core.ontology import (
+from aibrain_usa.core.ontology import (
     USState,
     MatterType,
     USCourt,

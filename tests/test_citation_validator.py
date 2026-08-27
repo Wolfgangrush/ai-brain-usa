@@ -1,6 +1,6 @@
 """Tests for usa_citation_validator MCP tool — USA v0.1 (Bluebook 21st ed)."""
 
-from ailawfirm_usa.mcp_tools.usa_citation_validator import usa_citation_validator
+from aibrain_usa.mcp_tools.usa_citation_validator import usa_citation_validator
 
 
 def test_scotus_case_brown():

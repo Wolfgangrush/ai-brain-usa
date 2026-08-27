@@ -19,7 +19,7 @@ Visit the live site: [wolfgangrush.github.io](https://wolfgangrush.github.io)
 
 # 🇺🇸 AI Brain for USA Lawyers
 
-> **Free practice OS for every US solo attorney, in-house counsel, and supervised paralegal. Federal-focused with state scaffolding. Terminal-native. Cloud-LLM behind the [Pseudonymisation Gateway](https://github.com/Wolfgangrush/pseudonymisation-gateway) sanitising PII before any prompt leaves the machine.**
+> **Free practice OS for every US solo attorney, in-house counsel, and supervised paralegal. Federal-focused with state scaffolding. Terminal-native. Local-first by default (Ollama + Qwen3 — nothing leaves your laptop). Cloud-LLM optional with the [Pseudonymisation Gateway](https://github.com/Wolfgangrush/pseudonymisation-gateway) sanitising PII before any prompt leaves the machine.**
 
 **For licensed attorneys only.** Intended for attorneys admitted in any US state, the District of Columbia, any US federal court, in-house counsel of US entities, registered Foreign Legal Consultants, and paralegals working under direct attorney supervision. **If you are not a licensed attorney, do not use this tool to produce client-facing legal work.** State UPL rules apply — strictest enforcement in CA · TX · FL · NY · IL · DC. Read [DISCLAIMER.md](DISCLAIMER.md) before installation.
 
@@ -41,9 +41,9 @@ Every specialist is **AI-backed** by whatever host you launch it under (Claude �
 
 ## 🛠 Recent fixes
 
-- **Unified the ChromaDB collection name** — drawers written through the MCP server now live in the same collection (`ailawfirm_usa_drawers`, sourced from `BrainConfig().collection_name`) that the search and CLI paths read from. Previously the MCP server wrote to one collection while `searcher.py` / `miner.py` / `layers.py` / `convo_miner.py` read from a hardcoded `"brain_drawers"`, so MCP-written drawers were unfindable by search. All call sites now resolve the same name.
+- **Unified the ChromaDB collection name** — drawers written through the MCP server now live in the same collection (`aibrain_usa_drawers`, sourced from `BrainConfig().collection_name`) that the search and CLI paths read from. Previously the MCP server wrote to one collection while `searcher.py` / `miner.py` / `layers.py` / `convo_miner.py` read from a hardcoded `"brain_drawers"`, so MCP-written drawers were unfindable by search. All call sites now resolve the same name.
 - **Removed dead code** — deleted `KnowledgeGraph.seed_from_entity_facts` (referenced a non-existent `fact_checker.py` module and was never called) and the no-op `_ = signal_categories - {"pronoun"}` line in `entity_detector.py`.
-- **Consolidated duplicate stopword lists** — `entity_detector.STOPWORDS` and `dialect._STOP_WORDS` had drifted apart and each contained internal duplicates. Both now import from a single `ailawfirm_usa/stopwords.py` whose `STOPWORDS` is the exact union of both originals — every word preserved, no word dropped, duplicates removed once.
+- **Consolidated duplicate stopword lists** — `entity_detector.STOPWORDS` and `dialect._STOP_WORDS` had drifted apart and each contained internal duplicates. Both now import from a single `aibrain_usa/stopwords.py` whose `STOPWORDS` is the exact union of both originals — every word preserved, no word dropped, duplicates removed once.
 
 
 > 📌 **v0.1 scope: FEDERAL.** State-specific procedural modules ship in v0.2+. State enums scaffolding (50 states + DC + territories) is present in v0.1 as placeholders. See [SCOPE.md](SCOPE.md).
@@ -123,7 +123,7 @@ pip install git+https://github.com/Wolfgangrush/ai-brain-usa.git
 ### Step 3 — Connect an AI brain (ONE COMMAND)
 
 ```bash
-ailawfirm-usa connect-local
+aibrain-usa connect-local
 ```
 
 This single command:
@@ -137,19 +137,9 @@ After this, **no queries leave your laptop**.
 
 Three honest model options — see [MODEL_SETUP.md](MODEL_SETUP.md):
 
-
-> ### ⚠️ Local-model tier is NOT wired yet (2026-08-16)
-> The local Ollama tier described below is **not implemented in this release** — no code path
-> routes inference to Ollama, so nothing in this repository currently delivers the
-> "nothing leaves your laptop" position, and no regulatory duty here is satisfied by *absence of
-> transmission* today. The **cloud path and its pseudonymisation gateway are real** (wired on
-> every egress, covered by tests). Assume every AI answer is cloud-processed until this notice is
-> removed. See `MODEL_SETUP.md`.
-
-
 | Choice | Cost | Privacy | Best for |
 |---|---|---|---|
-| 🚧 **Local Ollama + Qwen3** | $0 forever | ⛔ **NOT WIRED YET** — this tier is not implemented in this release; no duty is satisfied by absence of transmission today | *(planned — next milestone)* |
+| 🥇 **Local Ollama + Qwen3** | $0 forever | 🟢 Perfect — nothing leaves your laptop | **Client matters · ABA Rule 1.6 confidentiality · HIPAA-PHI · privileged communications · use this tier when zero cross-border data flow is required** |
 | 🥈 **DeepSeek API** | ~$2-5/mo | ⚠️ Pseudonymisation Gateway sanitises party names + SSN/ITIN/EIN before transmission, BUT China-routed transmission of even pseudonymised data for US client matter raises ABA Rule 1.6 + state-AG questions | Non-client work · public-law research · templates |
 | 🥉 **Claude / Gemini API** | ~$25-80/mo | 🟢 Strong (enterprise privacy default-ON) — Gateway sanitises before transmission; vendor BAA available | Heavy daily users with executed BAA + state-privacy DPA + clear state-bar opinion on cloud AI use. **⚠️ HIPAA PHI in cloud mode** requires (a) Gateway coverage of the specific PHI identifiers in your matter AND (b) executed Business Associate Agreement with the vendor per 45 CFR §164.504(e) — Gateway sanitisation alone does not discharge the BAA obligation |
 
@@ -157,17 +147,17 @@ Three honest model options — see [MODEL_SETUP.md](MODEL_SETUP.md):
 
 **▶ Quickstart — the commands that now work:**
 ```bash
-python3 -m ailawfirm_usa reception                 # turn it on: greeting + systems check + memory
-python3 -m ailawfirm_usa ask "validate a case citation"
-python3 -m ailawfirm_usa ask "which court has jurisdiction over my matter"
-python3 -m ailawfirm_usa chat                      # interactive — type anything, it routes for you
-python3 -m ailawfirm_usa recap                     # what you did last time
+python3 -m aibrain_usa reception                 # turn it on: greeting + systems check + memory
+python3 -m aibrain_usa ask "validate a case citation"
+python3 -m aibrain_usa ask "which court has jurisdiction over my matter"
+python3 -m aibrain_usa chat                      # interactive — type anything, it routes for you
+python3 -m aibrain_usa recap                     # what you did last time
 ```
 Inside a host CLI (Claude / GLM / Codex) opened in this folder, just say **"turn it on"** — the receptionist greets you, Attorney, and routes everything through the brain.
 
 
 ```bash
-ailawfirm-usa
+aibrain-usa
 ```
 
 Sample commands:
@@ -187,11 +177,11 @@ Sample commands:
 
 **Architecture — three pieces decide your privacy posture:**
 
-**(1) Local-only state.** Your matters, drafts, audit logs, calendar entries, and configuration live in `~/.ailawfirm-usa/`. Never uploaded by the tool. Never synced to a third-party cloud by the tool. No telemetry. No "anonymous usage statistics." The publisher operates zero infrastructure and cannot access this folder. Verifiable via `grep -ri "telemetry\|analytics\|requests.post\|urlopen" ailawfirm_usa/` — should return only user-initiated cloud-LLM calls.
+**(1) Local-only state.** Your matters, drafts, audit logs, calendar entries, and configuration live in `~/.aibrain-usa/`. Never uploaded by the tool. Never synced to a third-party cloud by the tool. No telemetry. No "anonymous usage statistics." The publisher operates zero infrastructure and cannot access this folder. Verifiable via `grep -ri "telemetry\|analytics\|requests.post\|urlopen" aibrain_usa/` — should return only user-initiated cloud-LLM calls.
 
 **(2) LLM backend — you choose.** The default `connect-local` command configures Ollama + Qwen3 to run the language model on your laptop (truly nothing leaves). If you opt into a cloud-LLM tier (DeepSeek / Claude / Gemini) for quality reasons, see the tier table above for cost + privacy trade-offs.
 
-**(3) Pseudonymisation Gateway — always-on for cloud mode.** When you configure a cloud-LLM provider in `~/.ailawfirm-usa/config.json`, the internalised `PseudonymisationGateway` (source: `ailawfirm_usa/pseudonymisation.py`) automatically substitutes real names, government IDs (SSN · ITIN · EIN · Aadhaar for Indian-diaspora matters), contact identifiers (phone · email), and case references (federal docket numbers) with deterministic placeholders BEFORE the prompt leaves your machine. The placeholder ↔ original map lives in memory only (never written to disk; destroyed when the gateway goes out of scope). Cloud vendors see only the abstract structure of the matter; the user sees real values restored in the response.
+**(3) Pseudonymisation Gateway — always-on for cloud mode.** When you configure a cloud-LLM provider in `~/.aibrain-usa/config.json`, the internalised `PseudonymisationGateway` (source: `aibrain_usa/pseudonymisation.py`) automatically substitutes real names, government IDs (SSN · ITIN · EIN · Aadhaar for Indian-diaspora matters), contact identifiers (phone · email), and case references (federal docket numbers) with deterministic placeholders BEFORE the prompt leaves your machine. The placeholder ↔ original map lives in memory only (never written to disk; destroyed when the gateway goes out of scope). Cloud vendors see only the abstract structure of the matter; the user sees real values restored in the response.
 
 **HIPAA-PHI matters in cloud mode** additionally require an executed Business Associate Agreement with the vendor per 45 CFR §164.504(e). Gateway sanitisation reduces but does not eliminate Covered Entity obligations — verify the Gateway's coverage of the specific PHI identifiers in your matter AND have the BAA in place before invoking cloud mode for PHI work.
 
@@ -234,11 +224,11 @@ If your matter is:
 - **HIPAA / GLBA / FERPA / state-privacy special-category data** → Stay in `connect-local` (Ollama + Qwen3) mode. Do not opt into any cloud-LLM tier for these matters; do not use free-tier Gemini.
 - **State secrets / classified material / under-seal court orders** → Stay in `connect-local` (Ollama + Qwen3) mode. For physically air-gapped networks where the pip-install / model-download / auto-update paths are also prohibited, await the v0.3+ signed offline-install bundle below.
 
-The firm's audit log captures every API call (timestamp, agent, prompt-summary, output-summary) at `~/.ailawfirm-usa/audit_logs/`. Logs never leave your machine. They are your professional-conduct compliance trail.
+The firm's audit log captures every API call (timestamp, agent, prompt-summary, output-summary) at `~/.aibrain-usa/audit_logs/`. Logs never leave your machine. They are your professional-conduct compliance trail.
 
 ### v0.3+ roadmap
 
-> What v0.1 already ships: (a) `connect-local` (prepares the machine for a local model; inference is **not** yet routed locally), (b) configurable cloud-LLM tier covering Claude / OpenAI / paid Gemini / DeepSeek, (c) Pseudonymisation Gateway sanitising PII before any cloud-LLM call, and (d) no first-party telemetry. The items below extend the floor — they are not a future replacement for what is already shipped.
+> What v0.1 already ships: (a) local-LLM default via `connect-local` (Ollama + Qwen3 — nothing leaves your laptop in local mode), (b) configurable cloud-LLM tier covering Claude / OpenAI / paid Gemini / DeepSeek, (c) Pseudonymisation Gateway sanitising PII before any cloud-LLM call, and (d) no first-party telemetry. The items below extend the floor — they are not a future replacement for what is already shipped.
 
 - **Signed offline-install bundle** — the `pip install` path currently touches PyPI and the Ollama model registry; v0.3+ ships a signed offline-installable archive with the Qwen3 model pre-bundled, removing the last network-touch point even at install time. For attorneys on physically air-gapped networks (sealed-matter rooms, security-cleared environments).
 - **In-firm LLM tenant adapter** — drop-in config for Azure OpenAI / private Vertex / on-prem vLLM endpoints. Distinct from the today-shipped public-API cloud-LLM tier; targets attorneys whose firm already provisions LLM infrastructure under its own BAA / DPA.
@@ -257,8 +247,8 @@ Tracked at: [drafting-agents-core issues](https://github.com/Wolfgangrush/drafti
 ## 📁 Where your data lives
 
 ```
-~/.ailawfirm-usa/                    ← Mac/Linux
-C:\Users\YourName\.ailawfirm-usa\    ← Windows
+~/.aibrain-usa/                    ← Mac/Linux
+C:\Users\YourName\.aibrain-usa\    ← Windows
 ├── palace/                          ← all matter/client/citation memory (ChromaDB)
 ├── config.json                      ← your settings (AI provider · state · timezone · prefs)
 ├── calendars/                       ← generated .ics feeds for iPhone/Outlook subscribe
@@ -276,10 +266,10 @@ When a new version of AI Brain — USA is published, you pull it in with **one c
 ### Path 1 — Plain terminal
 
 ```
-ailawfirm-usa update
+aibrain-usa update
 ```
 
-Under the hood this runs `pip install --upgrade git+https://github.com/Wolfgangrush/ai-brain-usa.git`. After it finishes, restart any open `ailawfirm-usa` session so the new skills + prompts load.
+Under the hood this runs `pip install --upgrade git+https://github.com/Wolfgangrush/ai-brain-usa.git`. After it finishes, restart any open `aibrain-usa` session so the new skills + prompts load.
 
 ### Path 2 — Inside Claude Code
 
@@ -299,7 +289,7 @@ Type:
 /update
 ```
 
-Same outcome — Gemini calls `ailawfirm-usa update` for you.
+Same outcome — Gemini calls `aibrain-usa update` for you.
 
 ### When to update
 
@@ -311,7 +301,7 @@ Same outcome — Gemini calls `ailawfirm-usa update` for you.
 
 - Your matter folders (`~/Desktop/<your-firm>/<matter>/...`)
 - Your project-root `CLAUDE.md` (your customisations always win)
-- Your `~/.ailawfirm-usa/` config + palace data
+- Your `~/.aibrain-usa/` config + palace data
 - Your chosen AI model setup (Ollama · DeepSeek · Claude · Gemini)
 
 Only the firm's installed Python code, skills, and template files refresh. Your practice is unaffected.
@@ -321,7 +311,7 @@ Only the firm's installed Python code, skills, and template files refresh. Your 
 If a new version updates the template `CLAUDE.md` (the firm's standing rules), your project-root `CLAUDE.md` is preserved because your customisations always win. To see what changed in the template after an update:
 
 ```
-diff CLAUDE.md "$(python3 -c 'import ailawfirm_usa, os; print(os.path.join(os.path.dirname(ailawfirm_usa.__file__), "templates/CLAUDE.md"))')"
+diff CLAUDE.md "$(python3 -c 'import aibrain_usa, os; print(os.path.join(os.path.dirname(aibrain_usa.__file__), "templates/CLAUDE.md"))')"
 ```
 
 Review the diff and merge what you want into your own `CLAUDE.md`.
@@ -336,9 +326,9 @@ Review the diff and merge what you want into your own `CLAUDE.md`.
 
 - **v0.1.0** *(shipped)* — bootstrap: architecture, brain layer, 6 specialist agents (4 live · 2 stubs) — calendar functionality delivered via the calendar MCP tool rather than as a standalone agent — 3 working MCP tools (court · citation · calendar), 7-language onboarding, connect-local one-command CLI, state-enum scaffolding (50 states + DC + territories as placeholders), Federal-focused v0.1, LEGAL_EXPOSURE_PLAYBOOK v0.1 compliance
 - **v0.2 — knowledge layer** *(shipped 2026-05-29)* — **23 Tier-1 federal-first statute digests** in `_statute_corpus/` (FRCP · FRE · FRCrP · FRAP · 28 USC · SCOTUS Rules · Constitution + Bill of Rights · APA post-*Loper Bright* · Title 11 Bankruptcy Code · UCC Arts 1/2/9 · Sherman+Clayton+FTC antitrust · FAA · CFAA · IP consolidated (Lanham/Copyright/Patent) · Securities Act 1933 + Exchange Act 1934 · SOX · Dodd-Frank · DGCL · FCPA · Title VII+ADA+ADEA+FMLA+PWFA · ERISA+FLSA · CISG · ABA Model Rules) plus **89 federal-first drafting templates** in `_drafting_data/` covering all 13 canonical litigation categories + commercial backbone + corporate backbone. Doctrinal currency anchored through 2024-2026 SCOTUS.
-- **v0.1.1 — Pseudonymisation Gateway** *(shipped 2026-05-29)* — internalised at `ailawfirm_usa/pseudonymisation.py`; sanitises PII before any cloud-LLM call. Standalone source at [pseudonymisation-gateway](https://github.com/Wolfgangrush/pseudonymisation-gateway).
+- **v0.1.1 — Pseudonymisation Gateway** *(shipped 2026-05-29)* — internalised at `aibrain_usa/pseudonymisation.py`; sanitises PII before any cloud-LLM call. Standalone source at [pseudonymisation-gateway](https://github.com/Wolfgangrush/pseudonymisation-gateway).
 - **v0.2 — frontend / UX layer** *(in progress)* — matter dashboard · citation deep-parse · ABA Formal Opinion 512 compliance dashboard · state-procedural modules for CA · TX · NY · FL · IL · DE (6-state launch wave)
-- **v0.3 (early) — Tier-2 full-text statutory layer** *(in progress)* — full-text lookup across **2.04M statute sections + 7.7k constitution sections** (50 states + DC + PR + US Code) via the open [Open US Law](https://huggingface.co/datasets/vaquill/open-us-law) dataset by **Vaquill AI** (CC-BY-4.0; scrapers Apache-2.0; US primary law itself is public domain per *Georgia v. Public.Resource.Org*, 590 U.S. 255 (2020)). Fetched locally at install time (`python scripts/fetch_open_us_law.py --full`) into a SQLite FTS5 database — **never committed to the repo, never sent to any cloud**. Queried by the stdlib-only `ailawfirm_usa/tier2_statutes.py`. ⚠️ Currency is not uniform: rows marked `act_status="snapshot"` are unrefreshed captures with good-law status unknown — every Tier-2 section must be re-verified at the official government source (the recorded `source_url` is provenance, not necessarily official) before use in any filing; the Tier-1 digests' STATUS: VERIFIED discipline does not transfer.
+- **v0.3 (early) — Tier-2 full-text statutory layer** *(in progress)* — full-text lookup across **2.04M statute sections + 7.7k constitution sections** (50 states + DC + PR + US Code) via the open [Open US Law](https://huggingface.co/datasets/vaquill/open-us-law) dataset by **Vaquill AI** (CC-BY-4.0; scrapers Apache-2.0; US primary law itself is public domain per *Georgia v. Public.Resource.Org*, 590 U.S. 255 (2020)). Fetched locally at install time (`python scripts/fetch_open_us_law.py --full`) into a SQLite FTS5 database — **never committed to the repo, never sent to any cloud**. Queried by the stdlib-only `aibrain_usa/tier2_statutes.py`. ⚠️ Currency is not uniform: rows marked `act_status="snapshot"` are unrefreshed captures with good-law status unknown — every Tier-2 section must be re-verified at the official government source (the recorded `source_url` is provenance, not necessarily official) before use in any filing; the Tier-1 digests' STATUS: VERIFIED discipline does not transfer.
 - **v0.3** *(following milestone)* — **firm mode** for multi-attorney practices · role/permission · matter assignment · conflict-check · trust-account compliance (state IOLTA rules) · ABA Model Rule 5.1 supervisory framework · per-state procedural depth wave 2 · sectoral specialist annexes (tax code procedural · environmental NEPA/CERCLA · immigration INA · HIPAA covered-entity rules · GLBA/BSA/OFAC sanctions · trade Title 19 · ITC § 337)
 - **v0.4+** — CourtListener / Justia / PACER cross-reference · 50-state procedural depth wave 3 · Apple EventKit native · CalDAV bidirectional sync · multi-state matter handling (federal + state + tribal)
 

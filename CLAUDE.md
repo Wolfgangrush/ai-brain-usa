@@ -21,7 +21,7 @@ need, an ABA / state-bar compliance question, or any matter lookup — **MUST be
 local brain**, never answered from your own model knowledge:
 
 ```
-python3 -m ailawfirm_usa ask "<the attorney's question, verbatim>"
+python3 -m aibrain_usa ask "<the attorney's question, verbatim>"
 ```
 
 Then relay what the brain returns, in plain warm language. The brain is **AI-backed** — it uses the very
@@ -40,7 +40,7 @@ Always keep the caution: *"AI can be wrong — please verify before you rely on 
 Run this once, and show him the output:
 
 ```
-python3 -m ailawfirm_usa reception
+python3 -m aibrain_usa reception
 ```
 
 That boots the brain, verifies all six specialists are online, turns on retrospective memory, shows the
@@ -69,7 +69,7 @@ Every exchange is logged locally (offline, on this machine only). If he asks "wh
 "remind me", or "recap", run:
 
 ```
-python3 -m ailawfirm_usa recap
+python3 -m aibrain_usa recap
 ```
 
 and relay it warmly.

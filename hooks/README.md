@@ -66,7 +66,7 @@ Add to `.codex/hooks.json`:
 Edit `mempal_save_hook.sh` to change:
 
 - **`SAVE_INTERVAL=15`** — How many human messages between saves. Lower = more frequent saves, higher = less interruption.
-- **`STATE_DIR`** — Where hook state is stored (defaults to `~/.ailawfirm-usa/hook_state/`)
+- **`STATE_DIR`** — Where hook state is stored (defaults to `~/.aibrain-usa/hook_state/`)
 - **`BRAIN_DIR`** — Optional. Set to a conversations directory to auto-run `brain mine <dir>` on each save trigger. Leave blank (default) to let the AI handle saving via the block reason message.
 
 ### brain CLI
@@ -122,7 +122,7 @@ No counting needed — compaction always warrants a save.
 
 Check the hook log:
 ```bash
-cat ~/.ailawfirm-usa/hook_state/hook.log
+cat ~/.aibrain-usa/hook_state/hook.log
 ```
 
 Example output:

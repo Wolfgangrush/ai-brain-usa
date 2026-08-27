@@ -20,7 +20,7 @@ import urllib.error
 
 import pytest
 
-from ailawfirm_usa.brain import llm
+from aibrain_usa.brain import llm
 
 
 class _FakeResp:
@@ -72,6 +72,7 @@ def test_local_provider_posts_to_ollama_host(monkeypatch):
     monkeypatch.setattr(llm.urllib.request, "urlopen", fake_urlopen)
     out = llm.complete("sys", "hi")
     assert captured["url"] == "http://localhost:11434/api/chat"
+    assert "z.ai" not in captured["url"] and "minimax" not in captured["url"]
     assert "anthropic" not in captured["url"]
     assert "api.anthropic.com" not in captured["url"]
     payload = json.loads(captured["body"])
@@ -259,10 +260,10 @@ def test_cloud_key_overrides_local_provider(monkeypatch):
     The original justification was test convenience — keeping gateway-wiring tests
     green on a CI box with a stale ai_provider=ollama. Test convenience is not a
     reason to weaken production egress routing. CI states its intent explicitly
-    with AILAWFIRM_FORCE_CLOUD=1, which is what this test now does.
+    with AIBRAIN_FORCE_CLOUD=1, which is what this test now does.
     """
     _patch_provider(monkeypatch, provider="ollama", host="http://localhost:11434", model="qwen3:7b")
-    monkeypatch.setenv("AILAWFIRM_FORCE_CLOUD", "1")
+    monkeypatch.setenv("AIBRAIN_FORCE_CLOUD", "1")
     monkeypatch.setenv("ANTHROPIC_AUTH_TOKEN", "test-cloud-key")
     monkeypatch.setenv("ANTHROPIC_BASE_URL", "https://example.test/anthropic")
     monkeypatch.setenv("ANTHROPIC_MODEL", "test-model")
@@ -389,10 +390,10 @@ def test_model_name_falls_back_to_qwen3_default(monkeypatch):
 
 def test_local_config_wins_even_when_cloud_key_is_present(monkeypatch):
     """A solicitor who ran connect-local must go local even with a key exported."""
-    import ailawfirm_usa.brain.llm as llm_mod
+    import aibrain_usa.brain.llm as llm_mod
 
     monkeypatch.setenv("ANTHROPIC_AUTH_TOKEN", "sk-ant-a-key-that-happens-to-exist")
-    monkeypatch.delenv("AILAWFIRM_FORCE_CLOUD", raising=False)
+    monkeypatch.delenv("AIBRAIN_FORCE_CLOUD", raising=False)
     monkeypatch.setattr(
         llm_mod,
         "_read_provider_config",
@@ -419,10 +420,10 @@ def test_local_config_wins_even_when_cloud_key_is_present(monkeypatch):
 
 def test_force_cloud_env_var_is_the_only_way_to_override_local(monkeypatch):
     """Escaping local mode must be an explicit, loudly-named act."""
-    import ailawfirm_usa.brain.llm as llm_mod
+    import aibrain_usa.brain.llm as llm_mod
 
     monkeypatch.setenv("ANTHROPIC_AUTH_TOKEN", "sk-ant-key")
-    monkeypatch.setenv("AILAWFIRM_FORCE_CLOUD", "1")
+    monkeypatch.setenv("AIBRAIN_FORCE_CLOUD", "1")
     monkeypatch.setattr(
         llm_mod,
         "_read_provider_config",

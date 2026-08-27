@@ -26,11 +26,11 @@ The publisher (wolfgang_rush) operates **zero infrastructure** that touches your
 
 AI Brain — USA is **local-first** software. Specifically:
 
-**(1) The codebase contains zero telemetry.** Verify with `grep -ri "telemetry\|analytics\|tracking\|requests.post\|urlopen" ailawfirm_usa/` — should return only legitimate cloud-AI calls (user-initiated, routed direct to your chosen vendor).
+**(1) The codebase contains zero telemetry.** Verify with `grep -ri "telemetry\|analytics\|tracking\|requests.post\|urlopen" aibrain_usa/` — should return only legitimate cloud-AI calls (user-initiated, routed direct to your chosen vendor).
 
 **(2) The publisher operates no server.** No AI Brain USA API. No cloud service. No database. The publisher's only infrastructure is the GitHub repository.
 
-**(3) Storage is on your laptop.** Your matter data, citation cache, calendar entries, configuration live under `~/.ailawfirm-usa/`. The publisher has no access to this folder.
+**(3) Storage is on your laptop.** Your matter data, citation cache, calendar entries, configuration live under `~/.aibrain-usa/`. The publisher has no access to this folder.
 
 **(4) Network calls are limited to:**
 - Package installation (PyPI during `pip install`)
@@ -83,7 +83,7 @@ If you opt into cloud mode and the cloud vendor processes data outside the US (o
 
 You can independently verify zero-collection:
 
-1. `grep -ri "telemetry\|analytics\|posthog\|mixpanel\|segment\|amplitude\|google-analytics\|datadog\|sentry" ailawfirm_usa/` — should return zero results.
+1. `grep -ri "telemetry\|analytics\|posthog\|mixpanel\|segment\|amplitude\|google-analytics\|datadog\|sentry" aibrain_usa/` — should return zero results.
 2. `cat requirements.txt` — no analytics or telemetry libraries.
 3. Run the tool offline — should work fully (cloud-AI calls will fail, which is expected and visible).
 4. Inspect network traffic with `nettop` (macOS) / `nethogs` (Linux) / Resource Monitor (Windows) — should show traffic only to user-initiated cloud-AI endpoints if cloud mode is on.
