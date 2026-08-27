@@ -112,7 +112,7 @@ fi
 
 SINCE_LAST=$((EXCHANGE_COUNT - LAST_SAVE))
 
-# Log for debugging (check ~/.ailawfirm-usa/hook_state/hook.log)
+# Log for debugging (check ~/.aibrain-usa/hook_state/hook.log)
 echo "[$(date '+%H:%M:%S')] Session $SESSION_ID: $EXCHANGE_COUNT exchanges, $SINCE_LAST since last save" >> "$STATE_DIR/hook.log"
 
 # Time to save?

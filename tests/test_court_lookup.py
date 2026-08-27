@@ -1,6 +1,6 @@
 """Tests for usa_court_lookup MCP tool — USA v0.1."""
 
-from ailawfirm_usa.mcp_tools.usa_court_lookup import usa_court_lookup, _fuzzy_match_court
+from aibrain_usa.mcp_tools.usa_court_lookup import usa_court_lookup, _fuzzy_match_court
 
 
 def test_finds_scotus():

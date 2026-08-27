@@ -63,7 +63,7 @@ See [MODEL_SETUP.md](MODEL_SETUP.md) for exact setup.
 
 ### Step 4 — Your first interaction
 ```bash
-ailawfirm_usa
+aibrain_usa
 ```
 
 ```
@@ -80,10 +80,10 @@ ailawfirm_usa
 
 ### Step 5 — Try these
 ```bash
-ailawfirm_usa court "scotus"
-ailawfirm_usa cite "347 U.S. 483 (1954)"
-ailawfirm_usa cite "42 U.S.C. § 1983"
-ailawfirm_usa calendar add --event-type hearing --title "Motion to Dismiss" --date 2026-06-15 --state NY
+aibrain_usa court "scotus"
+aibrain_usa cite "347 U.S. 483 (1954)"
+aibrain_usa cite "42 U.S.C. § 1983"
+aibrain_usa calendar add --event-type hearing --title "Motion to Dismiss" --date 2026-06-15 --state NY
 ```
 
 ## Scope note

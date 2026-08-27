@@ -56,7 +56,7 @@ Wait 1-2 minutes for the download + install (~200 MB).
 
 **Verify it worked:**
 ```
-python3 -c "import ailawfirm_india; print('OK')"
+python3 -c "import aibrain_usa; print('OK')"
 ```
 
 You should see `OK`.
@@ -108,7 +108,7 @@ See [MODEL_SETUP.md](MODEL_SETUP.md).
 ## Step 5 — Run
 
 ```
-ailawfirm-india
+aibrain-usa
 ```
 
 Try:
@@ -123,7 +123,7 @@ Try:
 ## 📁 Where your data lives on Mac
 
 ```
-~/.ailawfirm-india/             ← Mac shortcut for /Users/YourName/.ailawfirm-india/
+~/.aibrain-usa/             ← Mac shortcut for /Users/YourName/.aibrain-usa/
 ├── palace/                     ← all matter/client/citation memory
 ├── config.json                 ← AI model settings
 └── people_map.json             ← optional client alias system
@@ -132,20 +132,20 @@ Try:
 **To see it in Finder:**
 - Press `Cmd + Shift + .` (period) — this toggles showing hidden files
 - Navigate to your home folder (Cmd+Shift+H)
-- You'll see `.ailawfirm-india`
+- You'll see `.aibrain-usa`
 
 **Backup:**
 ```
-cp -R ~/.ailawfirm-india ~/Dropbox/ailawfirm-india-backup
+cp -R ~/.aibrain-usa ~/Dropbox/aibrain-usa-backup
 ```
 
-Or via Finder: drag the `.ailawfirm-india` folder to iCloud Drive / Dropbox.
+Or via Finder: drag the `.aibrain-usa` folder to iCloud Drive / Dropbox.
 
 ---
 
 ## 🆘 Common Mac problems + fixes
 
-### "command not found: ailawfirm-india" after install
+### "command not found: aibrain-usa" after install
 Your shell can't find Python's scripts directory. Add to your PATH:
 ```
 echo 'export PATH="$HOME/Library/Python/3.13/bin:$PATH"' >> ~/.zshrc

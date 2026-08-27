@@ -7,7 +7,7 @@ import json
 import re
 
 
-from ailawfirm_usa.pseudonymisation import PseudonymisationGateway
+from aibrain_usa.pseudonymisation import PseudonymisationGateway
 
 
 # ── Feature A: detect_residue ────────────────────────────────────────────────
@@ -52,7 +52,7 @@ def test_sanitize_signature_unchanged_backcompat():
 
 # ── Feature C: write_audit (PII-FREE on disk) ────────────────────────────────
 def test_write_audit_is_pii_free(tmp_path):
-    from ailawfirm_usa.pseudonymisation_audit import write_audit
+    from aibrain_usa.pseudonymisation_audit import write_audit
 
     disc = {
         "masked_counts": {"PERSON": 2, "SSN": 1},
@@ -76,7 +76,7 @@ def test_write_audit_is_pii_free(tmp_path):
 
 
 def test_write_audit_swallows_io_errors():
-    from ailawfirm_usa.pseudonymisation_audit import write_audit
+    from aibrain_usa.pseudonymisation_audit import write_audit
 
     # An unwritable config dir must yield None, never raise.
     out = write_audit(
@@ -104,7 +104,7 @@ class _FakeResp:
 
 
 def test_llm_complete_audits_and_still_replies(monkeypatch, tmp_path):
-    from ailawfirm_usa.brain import llm
+    from aibrain_usa.brain import llm
 
     monkeypatch.setenv("ANTHROPIC_BASE_URL", "https://api.example.test/v1")
     monkeypatch.setenv("ANTHROPIC_AUTH_TOKEN", "k")

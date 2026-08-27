@@ -1,6 +1,6 @@
 """Tests for usa_calendar_sync MCP tool — USA v0.1."""
 
-from ailawfirm_usa.mcp_tools.usa_calendar_sync import usa_calendar_sync, _get_timezone
+from aibrain_usa.mcp_tools.usa_calendar_sync import usa_calendar_sync, _get_timezone
 
 
 def test_hearing_generates_ics():

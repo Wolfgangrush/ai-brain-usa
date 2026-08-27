@@ -17,7 +17,7 @@ Tell the advocate:
 
 > 🔄 I'm about to run:
 >
->     ailawfirm-usa update
+>     aibrain-usa update
 >
 > This pulls the latest firm code, skills, and prompts from the upstream repository:
 > https://github.com/Wolfgangrush/ai-brain-usa
@@ -30,7 +30,7 @@ If the advocate says no — STOP. Do nothing.
 
 ## Step 2 — Run the update
 
-!{ailawfirm-usa update}
+!{aibrain-usa update}
 
 ## Step 3 — Report the result
 
@@ -38,7 +38,7 @@ If exit code is 0:
 
 > ✅ Firm updated. To see what's new, run:
 >
->     ailawfirm-usa status
+>     aibrain-usa status
 
 If non-zero:
 
@@ -50,5 +50,5 @@ If non-zero:
 
 ## Step 4 — Suggest restart
 
-After a successful update, tell the advocate to close any open `ailawfirm-usa` sessions and re-launch so the new skills + prompts load.
+After a successful update, tell the advocate to close any open `aibrain-usa` sessions and re-launch so the new skills + prompts load.
 """

@@ -36,15 +36,15 @@ Các hãng luật lớn có đội ngũ luật sư để kiểm tra trích dẫn
 
 ```bash
 pip install git+https://github.com/Wolfgangrush/ai-brain-usa.git
-ailawfirm_usa
+aibrain_usa
 ```
 
 ## Dùng thử
 
 ```bash
-ailawfirm_usa court "scotus"
-ailawfirm_usa cite "347 U.S. 483 (1954)"
-ailawfirm_usa cite "42 U.S.C. § 1983"
+aibrain_usa court "scotus"
+aibrain_usa cite "347 U.S. 483 (1954)"
+aibrain_usa cite "42 U.S.C. § 1983"
 ```
 
 ## Phạm vi

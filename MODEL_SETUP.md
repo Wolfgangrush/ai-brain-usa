@@ -44,7 +44,7 @@ Alternative models if you have less storage:
 - `ollama pull mistral:7b` — 4 GB · good European model
 
 ### Connect to AI Brain India
-Open `~/.ailawfirm-india/config.json` (Mac) or `C:\Users\YourName\.ailawfirm-india\config.json` (Windows) and add:
+Open `~/.aibrain-usa/config.json` (Mac) or `C:\Users\YourName\.aibrain-usa\config.json` (Windows) and add:
 
 ```json
 {
@@ -54,7 +54,7 @@ Open `~/.ailawfirm-india/config.json` (Mac) or `C:\Users\YourName\.ailawfirm-ind
 }
 ```
 
-Restart `ailawfirm-india`. It now uses local Ollama. **No queries leave your laptop.**
+Restart `aibrain-usa`. It now uses local Ollama. **No queries leave your laptop.**
 
 ### Tradeoffs (honest)
 - Slower than cloud APIs (maybe 2-5x slower depending on your laptop)
@@ -99,7 +99,7 @@ DeepSeek's privacy policy says they **may use your API inputs and outputs for se
 
 ### Connect to AI Brain India
 
-Add to `~/.ailawfirm-india/config.json`:
+Add to `~/.aibrain-usa/config.json`:
 
 ```json
 {
@@ -198,7 +198,7 @@ Per Google AI Studio terms: **paid API tier (Gemini API with billing) does NOT u
 **Use a hybrid:**
 - **Local Ollama (Option A)** for everything involving actual client matter data
 - **DeepSeek API with opt-out (Option B)** for drafting templates, study, generic writing
-- Switch by editing one line in `~/.ailawfirm-india/config.json`
+- Switch by editing one line in `~/.aibrain-usa/config.json`
 
 **Decision rule:** if the query mentions a real client name, real facts, or anything that could be construed as attorney-client privileged → use Ollama. Otherwise DeepSeek is fine.
 

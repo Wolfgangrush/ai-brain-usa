@@ -12,7 +12,7 @@ import inspect
 import re
 
 
-from ailawfirm_usa.agents import deadline_agent, drafting_agent, matter_agent
+from aibrain_usa.agents import deadline_agent, drafting_agent, matter_agent
 
 FOREIGN_RESIDUE = re.compile(
     r"\b1963\b|CrPC|BNSS|\bSLP\b|\b482\b|anticipatory\s+bail|indian-hc-drafting|"
@@ -90,8 +90,8 @@ class TestDraftingUSA:
 class TestMatterUSA:
     def test_store_path_is_usa(self):
         src = inspect.getsource(matter_agent)
-        assert ".ailawfirm_usa" in src
-        assert ".ailawfirm-india" not in src and ".ailawfirm_singapore" not in src
+        assert ".aibrain_usa" in src
+        assert ".aibrain-usa" not in src and ".ailawfirm_singapore" not in src
 
     def test_add_then_list_roundtrip(self, tmp_path, monkeypatch):
         store = tmp_path / "matters.json"

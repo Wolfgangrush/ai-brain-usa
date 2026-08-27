@@ -7,9 +7,9 @@ stop-word set must preserve the union of the original per-module sets.
 
 import chromadb
 
-from ailawfirm_usa import mcp_server, searcher
-from ailawfirm_usa.config import BrainConfig
-from ailawfirm_usa.stopwords import STOPWORDS
+from aibrain_usa import mcp_server, searcher
+from aibrain_usa.config import BrainConfig
+from aibrain_usa.stopwords import STOPWORDS
 
 
 def _read_path_collection_name():

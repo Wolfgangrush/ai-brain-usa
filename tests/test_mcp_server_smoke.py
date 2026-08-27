@@ -1,6 +1,6 @@
 """Smoke test for MCP server — USA v0.1."""
 
-from ailawfirm_usa.mcp_server import TOOL_TABLE, TOOL_SCHEMAS
+from aibrain_usa.mcp_server import TOOL_TABLE, TOOL_SCHEMAS
 
 
 def test_three_tools_registered():
